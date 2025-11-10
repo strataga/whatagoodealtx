@@ -162,7 +162,7 @@ export default function Home() {
           </div> */}
 
           <div className="postmark">
-            <p>✉️ Delivering vintage dreams directly to you! ✉️</p>
+            <p>Delivering vintage dreams directly to you!</p>
           </div>
         </div>
       </div>
