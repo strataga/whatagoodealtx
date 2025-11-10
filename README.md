@@ -1,6 +1,6 @@
-# WhataGoodDealTX
+# WhataGoodealTX
 
-A vintage-themed website for WhataGoodDealTX, specializing in antiques, vintage items, and collectibles from the 1950s era.
+A vintage-themed website for WhataGoodealTX, specializing in antiques, vintage items, and collectibles and more.
 
 ## Project Structure
 
@@ -40,7 +40,8 @@ npm run start
 
 ### Web (`apps/web`)
 
-The main WhataGoodDealTX website featuring:
+The main WhataGoodealTX website featuring:
+
 - Vintage postcard-themed design
 - Product categories showcase
 - Contact form modal
@@ -71,11 +72,13 @@ cp apps/web/.env.example apps/web/.env.local
 Required variables:
 
 ### Email (Resend)
+
 - `RESEND_API_KEY` - Your Resend API key
 - `RESEND_TO_EMAIL` - Email address to receive contact form submissions
 - `RESEND_FROM_EMAIL` - Email address to send from (must be verified domain)
 
 ### Instagram Integration
+
 - `INSTAGRAM_ACCESS_TOKEN` - Your Instagram Graph API access token
 - `INSTAGRAM_USER_ID` - Your Instagram user ID
 
@@ -89,6 +92,7 @@ Required variables:
 6. Tag posts with `#featured` to display them on the site
 
 The site will automatically:
+
 - Pull the last 9 Instagram posts tagged with `#featured`
 - Cache results for 15 minutes to avoid rate limits
 - Fall back to default categories if Instagram is not configured

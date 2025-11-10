@@ -74,7 +74,7 @@ import Slideshow from '@/components/Slideshow'
 
 const socialLinks = [
   { name: '📺 Whatnot', href: 'https://www.whatnot.com/user/whatagoodealtx' },
-  { name: '📷 Instagram', href: 'https://www.instagram.com/whatagoodealtx/' },
+  { name: '📷 Instagram', href: 'https://www.instagram.com/whatagoodealtx' },
   { name: '👍 Facebook', href: 'https://www.facebook.com/profile.php?id=61583154290122#' },
   { name: '🎥 TikTok', href: 'https://www.tiktok.com/@whatagoodealtx?is_from_webapp=1&sender_device=pc' },
   { name: '📧 Email', href: 'mailto:jen@whatagoodealtx.com' },
@@ -115,13 +115,13 @@ export default function Home() {
             <div className="logo-stamp">
               <Image
                 src="/logo.png"
-                alt="WhataGoodDealTX Logo"
+                alt="WhataGoodealTX Logo"
                 width={400}
                 height={400}
                 priority
               />
             </div>
-            <h1>WhataGoodDealTX</h1>
+            <h1>WhataGoodealTX</h1>
 
             <div className="wish-you-were-here">
               <h2>Wish You Were Here!</h2>

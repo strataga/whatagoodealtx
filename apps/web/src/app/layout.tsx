@@ -3,12 +3,12 @@ import './globals.css'
 import Script from 'next/script'
 
 export const metadata: Metadata = {
-  title: 'WhataGoodDealTX - Vintage & Antique Treasures from the 1950s',
-  description: 'Discover authentic vintage clothing, retro electronics, antiques, and collectibles from the golden age. Shop unique treasures live on Whatnot with WhataGoodDealTX.',
-  keywords: ['vintage', 'antiques', 'collectibles', 'retro', '1950s', 'vintage clothing', 'whatnot', 'live shopping', 'texas antiques'],
-  authors: [{ name: 'WhataGoodDealTX' }],
-  creator: 'WhataGoodDealTX',
-  publisher: 'WhataGoodDealTX',
+  title: 'WhataGoodealTX - Vintage & Antique Treasures',
+  description: 'Discover authentic vintage clothing, retro electronics, antiques, and collectibles from the golden age. Shop unique treasures live on Whatnot with WhataGoodealTX.',
+  keywords: ['vintage', 'antiques', 'collectibles', 'retro', 'vintage clothing', 'whatnot', 'live shopping', 'texas antiques'],
+  authors: [{ name: 'WhataGoodealTX' }],
+  creator: 'WhataGoodealTX',
+  publisher: 'WhataGoodealTX',
   formatDetection: {
     email: false,
     address: false,
@@ -24,17 +24,22 @@ export const metadata: Metadata = {
     apple: '/logo.png',
   },
   manifest: '/manifest.json',
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 5,
+  },
   openGraph: {
-    title: 'WhataGoodDealTX - Vintage & Antique Treasures from the 1950s',
+    title: 'WhataGoodealTX - Vintage & Antique Treasures',
     description: 'Discover authentic vintage clothing, retro electronics, antiques, and collectibles from the golden age. Shop unique treasures live on Whatnot.',
     url: 'https://whatagoodealtx.com',
-    siteName: 'WhataGoodDealTX',
+    siteName: 'WhataGoodealTX',
     images: [
       {
         url: '/logo.png',
         width: 400,
         height: 400,
-        alt: 'WhataGoodDealTX Logo',
+        alt: 'WhataGoodealTX Logo',
       },
     ],
     locale: 'en_US',
@@ -42,7 +47,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'WhataGoodDealTX - Vintage & Antique Treasures',
+    title: 'WhataGoodealTX - Vintage & Antique Treasures',
     description: 'Discover authentic vintage clothing, retro electronics, antiques, and collectibles from the golden age.',
     images: ['/logo.png'],
     creator: '@whatagoodealtx',
@@ -74,8 +79,8 @@ export default function RootLayout({
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'WhataGoodDealTX',
-    description: 'Vintage and antique treasures from the 1950s golden age',
+    name: 'WhataGoodealTX',
+    description: 'Vintage and antique treasures',
     url: 'https://whatagoodealtx.com',
     logo: 'https://whatagoodealtx.com/logo.png',
     sameAs: [

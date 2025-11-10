@@ -590,32 +590,177 @@ h1 {
   box-shadow: 0 0 10px rgba(255, 217, 61, 0.8);
 }
 
+/* Tablet and smaller */
+@media (max-width: 1024px) {
+  .postcard-container {
+    padding: 0 15px;
+  }
+
+  h1 {
+    font-size: 4em;
+  }
+
+  .logo-stamp {
+    width: 350px;
+  }
+
+  .postcard::before {
+    width: 280px;
+    height: 77px;
+  }
+
+  .postcard-sections {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .wish-you-were-here h2 {
+    font-size: 1.6em;
+  }
+
+  .social-stamps {
+    gap: 15px;
+  }
+
+  .stamp {
+    font-size: 1em;
+    padding: 8px 16px;
+  }
+
+  .slideshow-carousel {
+    height: 380px;
+    gap: 12px;
+  }
+
+  .carousel-prev,
+  .carousel-next {
+    width: 160px;
+    height: 240px;
+  }
+
+  .carousel-current {
+    width: 300px;
+    height: 360px;
+  }
+}
+
+/* Mobile devices */
 @media (max-width: 768px) {
+  body {
+    padding: 20px 10px;
+  }
+
+  .postcard-container {
+    padding: 0;
+  }
+
+  .postcard {
+    border-width: 8px;
+  }
+
+  .postcard-front {
+    padding: 40px 25px;
+  }
+
   .postcard-sections {
     grid-template-columns: 1fr;
+    gap: 20px;
+    margin: 30px 0;
   }
+
   h1 {
     font-size: 3em;
+    margin-bottom: 5px;
   }
+
   .logo-stamp {
     width: 250px;
   }
+
   .postcard::before {
     width: 180px;
     height: 50px;
+    top: 15px;
+    right: 15px;
   }
+
+  .divider {
+    width: 150px;
+    margin: 20px auto;
+  }
+
+  .section-card h3 {
+    font-size: 1.6em;
+  }
+
+  .section-card p {
+    font-size: 1.1em;
+  }
+
+  .card-image {
+    height: 180px;
+  }
+
+  .wish-you-were-here {
+    padding: 15px;
+    margin-top: 15px;
+  }
+
+  .wish-you-were-here h2 {
+    font-size: 1.4em;
+    margin-bottom: 12px;
+  }
+
+  .social-stamps {
+    gap: 12px;
+  }
+
+  .stamp {
+    font-size: 0.95em;
+    padding: 8px 15px;
+  }
+
+  .postmark {
+    margin-top: 30px;
+    padding-top: 20px;
+    font-size: 1.3em;
+  }
+
   .modal-postcard {
     padding: 30px 20px;
   }
+
   .modal-header h2 {
     font-size: 2em;
   }
+
   .modal-logo {
     width: 150px;
   }
+
   .modal-stamp-corner {
     width: 100px;
   }
+
+  .form-group label {
+    font-size: 1.1em;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    font-size: 1em;
+    padding: 10px 12px;
+  }
+
+  .submit-button {
+    font-size: 1.3em;
+    padding: 12px 25px;
+  }
+
+  .modal-footer {
+    font-size: 1.1em;
+  }
+
   .contact-trigger {
     width: 60px;
     height: 60px;
@@ -623,29 +768,212 @@ h1 {
     bottom: 20px;
     right: 20px;
   }
+
+  .slideshow-container {
+    margin: 30px 0;
+  }
+
   .slideshow-carousel {
     height: 300px;
     padding: 10px;
     gap: 10px;
   }
+
   .carousel-prev,
   .carousel-next {
     width: 100px;
     height: 180px;
   }
+
   .carousel-current {
     width: 220px;
     height: 280px;
   }
+
   .slide-nav {
     width: 40px;
     height: 40px;
     font-size: 18px;
   }
+
   .slide-prev {
     left: 10px;
   }
+
   .slide-next {
     right: 10px;
+  }
+
+  .slide-dots {
+    gap: 10px;
+  }
+
+  .slide-dot {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+  body {
+    padding: 15px 5px;
+  }
+
+  .postcard {
+    border-width: 6px;
+  }
+
+  .postcard-front {
+    padding: 30px 15px;
+  }
+
+  h1 {
+    font-size: 2.2em;
+  }
+
+  .logo-stamp {
+    width: 180px;
+  }
+
+  .postcard::before {
+    width: 120px;
+    height: 33px;
+    top: 10px;
+    right: 10px;
+  }
+
+  .divider {
+    width: 100px;
+    margin: 15px auto;
+  }
+
+  .postcard-sections {
+    gap: 15px;
+    margin: 20px 0;
+  }
+
+  .section-card h3 {
+    font-size: 1.4em;
+    margin: 12px 0 8px;
+  }
+
+  .section-card p {
+    font-size: 1em;
+    padding: 0 12px 15px;
+  }
+
+  .card-image {
+    height: 150px;
+  }
+
+  .wish-you-were-here {
+    padding: 12px;
+    margin-top: 12px;
+  }
+
+  .wish-you-were-here h2 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+  }
+
+  .social-stamps {
+    gap: 10px;
+  }
+
+  .stamp {
+    font-size: 0.85em;
+    padding: 6px 12px;
+  }
+
+  .postmark {
+    margin-top: 25px;
+    padding-top: 15px;
+    font-size: 1.1em;
+  }
+
+  .modal-content {
+    margin: 10px;
+  }
+
+  .modal-postcard {
+    padding: 25px 15px;
+  }
+
+  .modal-header h2 {
+    font-size: 1.6em;
+  }
+
+  .modal-logo {
+    width: 120px;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .form-group label {
+    font-size: 1em;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    font-size: 0.95em;
+    padding: 10px;
+  }
+
+  .submit-button {
+    font-size: 1.2em;
+    padding: 12px 20px;
+  }
+
+  .contact-trigger {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    bottom: 15px;
+    right: 15px;
+  }
+
+  .slideshow-carousel {
+    height: 240px;
+    padding: 8px;
+    gap: 8px;
+  }
+
+  .carousel-prev,
+  .carousel-next {
+    width: 70px;
+    height: 140px;
+  }
+
+  .carousel-current {
+    width: 160px;
+    height: 220px;
+  }
+
+  .slide-nav {
+    width: 35px;
+    height: 35px;
+    font-size: 16px;
+  }
+
+  .slide-prev {
+    left: 5px;
+  }
+
+  .slide-next {
+    right: 5px;
+  }
+
+  .slide-dots {
+    gap: 8px;
+    bottom: 15px;
+  }
+
+  .slide-dot {
+    width: 10px;
+    height: 10px;
+    border-width: 2px;
   }
 }

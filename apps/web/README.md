@@ -1,6 +1,6 @@
-# WhataGoodDealTX
+# WhataGoodealTX
 
-A vintage-themed website for WhataGoodDealTX, specializing in antiques, vintage items, and collectibles from the 1950s era.
+A vintage-themed website for WhataGoodealTX, specializing in antiques, vintage items, and collectibles and more.
 
 ## Getting Started
 

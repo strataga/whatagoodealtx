@@ -81,7 +81,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
 
           <div className="modal-header">
             <div className="modal-logo">
-              <Image src="/logo.png" alt="WhataGoodDealTX" width={200} height={200} />
+              <Image src="/logo.png" alt="WhataGoodealTX" width={200} height={200} />
             </div>
             <h2>Send us a postcard!</h2>
           </div>

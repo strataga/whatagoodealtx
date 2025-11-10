@@ -25,10 +25,10 @@ export async function POST(request: Request) {
 
     // Send email using Resend
     const data = await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL || "WhataGoodDealTX Contact <onboarding@resend.dev>",
+      from: process.env.RESEND_FROM_EMAIL || "WhataGoodealTX Contact <onboarding@resend.dev>",
       to: [process.env.RESEND_TO_EMAIL || "jason.cochran@strataga.io"],
       replyTo: email,
-      subject: `New Contact from ${name} - WhataGoodDealTX`,
+      subject: `New Contact from ${name} - WhataGoodealTX`,
       html: `
         <!DOCTYPE html>
         <html>
@@ -108,7 +108,7 @@ export async function POST(request: Request) {
           <body>
             <div class="postcard">
               <div class="header">
-                <h1>New Postcard from WhataGoodDealTX!</h1>
+                <h1>New Postcard from WhataGoodealTX!</h1>
                 <div class="stamp">NEW MESSAGE</div>
               </div>
 
@@ -128,7 +128,7 @@ export async function POST(request: Request) {
               </div>
 
               <div class="footer">
-                <p>✉️ Delivered from WhataGoodDealTX website ✉️</p>
+                <p>✉️ Delivered from WhataGoodealTX website ✉️</p>
               </div>
             </div>
           </body>
