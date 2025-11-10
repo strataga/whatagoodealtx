@@ -1,0 +1,17 @@
+{
+  "name": "WhataGoodDealTX - Vintage & Antique Treasures",
+  "short_name": "WhataGoodDealTX",
+  "description": "Discover authentic vintage clothing, retro electronics, antiques, and collectibles from the golden age",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fff8dc",
+  "theme_color": "#ff6b9d",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "400x400",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
