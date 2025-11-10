@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhataGoodDealTX - Greetings from the 50s!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Satisfy&family=Indie+Flower&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #89CFF0 0%, #FFDAB9 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .postcard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .postcard {
+            background: #fff8dc;
+            border: 12px solid #8b4513;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .postcard::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 360px;
+            height: 99px;
+            background: url('stamp.png');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            transform: rotate(15deg);
+        }
+
+        .postcard-front {
+            padding: 60px 50px;
+            text-align: center;
+            background:
+                linear-gradient(rgba(255, 248, 220, 0.95), rgba(255, 248, 220, 0.95)),
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 10px,
+                    rgba(139, 69, 19, 0.03) 10px,
+                    rgba(139, 69, 19, 0.03) 20px
+                );
+        }
+
+        .postcard-header {
+            margin-bottom: 40px;
+        }
+
+        .logo-stamp {
+            width: 400px;
+            height: auto;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(-5deg);
+        }
+
+        .logo-stamp img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        h1 {
+            font-family: 'Satisfy', cursive;
+            font-size: 5em;
+            color: #ff6b9d;
+            margin-top: 0;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 0 rgba(0,0,0,0.1);
+        }
+
+        .greeting {
+            font-family: 'Indie Flower', cursive;
+            font-size: 2.5em;
+            color: #4dabf7;
+            margin-bottom: 30px;
+        }
+
+        .divider {
+            width: 200px;
+            height: 3px;
+            background: linear-gradient(to right, #ff6b9d, #4dabf7, #ffd93d);
+            margin: 30px auto;
+        }
+
+        .postcard-sections {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .section-card {
+            background: linear-gradient(135deg, #fff 0%, #f5f5f5 100%);
+            border: 4px solid #4dabf7;
+            border-radius: 15px;
+            padding: 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            transform: rotate(-2deg);
+            transition: transform 0.3s ease;
+            overflow: hidden;
+        }
+
+        .section-card:nth-child(even) {
+            transform: rotate(2deg);
+        }
+
+        .section-card:hover {
+            transform: rotate(0deg) scale(1.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            background: #e8e8e8;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .section-card h3 {
+            font-family: 'Satisfy', cursive;
+            font-size: 2em;
+            color: #ff6b9d;
+            margin: 15px 0 10px;
+            text-align: center;
+            padding: 0 15px;
+        }
+
+        .section-card p {
+            font-family: 'Indie Flower', cursive;
+            font-size: 1.2em;
+            color: #2d2d2d;
+            text-align: center;
+            line-height: 1.5;
+            padding: 0 15px 20px;
+        }
+
+        .wish-you-were-here {
+            background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+            border: 4px dashed #ffd93d;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .wish-you-were-here h2 {
+            font-family: 'Satisfy', cursive;
+            font-size: 1.8em;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+
+        .social-stamps {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stamp {
+            background: #fff;
+            color: #2d2d2d;
+            padding: 10px 20px;
+            border: 3px solid #2d2d2d;
+            border-radius: 5px;
+            text-decoration: none;
+            font-family: 'Indie Flower', cursive;
+            font-size: 1.1em;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            font-weight: bold;
+        }
+
+        .stamp::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 12px;
+            height: 12px;
+            background: #ff6b9d;
+            border-radius: 50%;
+            border: 2px solid #2d2d2d;
+        }
+
+        .stamp:hover {
+            transform: translateY(-5px) rotate(-3deg);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+        }
+
+        .postmark {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 3px dashed #8b4513;
+            font-family: 'Indie Flower', cursive;
+            font-size: 1.6em;
+            color: #8b4513;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .postcard-sections {
+                grid-template-columns: 1fr;
+            }
+            h1 {
+                font-size: 3em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="postcard-container">
+        <div class="postcard">
+            <div class="postcard-front">
+                <div class="postcard-header">
+                    <div class="logo-stamp">
+                        <img src="logo.png" alt="WhataGoodDealTX Logo">
+                    </div>
+                    <h1>WhataGoodDealTX</h1>
+
+                    <div class="wish-you-were-here">
+                        <h2>Wish You Were Here!</h2>
+                        <div class="social-stamps">
+                            <a href="#" class="stamp">📺 Whatnot</a>
+                            <a href="#" class="stamp">📷 Instagram</a>
+                            <a href="#" class="stamp">👍 Facebook</a>
+                            <a href="#" class="stamp">🐦 Twitter</a>
+                        </div>
+                    </div>
+
+                    <div class="divider"></div>
+                </div>
+
+                <div class="postcard-sections">
+                    <div class="section-card">
+                        <div class="card-image">
+                            <img src="sample.jpg" alt="Vintage Fashion">
+                        </div>
+                        <h3>Vintage Fashion</h3>
+                        <p>Authentic 50s clothing & accessories from the golden era of style</p>
+                    </div>
+                    <div class="section-card">
+                        <div class="card-image">
+                            <img src="sample.jpg" alt="Retro Electronics">
+                        </div>
+                        <h3>Retro Electronics</h3>
+                        <p>Classic radios, record players & vintage gadgets that still work</p>
+                    </div>
+                    <div class="section-card">
+                        <div class="card-image">
+                            <img src="sample.jpg" alt="Antiques">
+                        </div>
+                        <h3>Antiques</h3>
+                        <p>Rare collectible treasures and one-of-a-kind vintage finds</p>
+                    </div>
+                    <div class="section-card">
+                        <div class="card-image">
+                            <img src="sample.jpg" alt="Vintage Books">
+                        </div>
+                        <h3>Vintage Books</h3>
+                        <p>First editions, classic literature & vintage magazines</p>
+                    </div>
+                    <div class="section-card">
+                        <div class="card-image">
+                            <img src="sample.jpg" alt="Retro Art">
+                        </div>
+                        <h3>Retro Art</h3>
+                        <p>Original 50s prints, paintings & nostalgic wall decor</p>
+                    </div>
+                    <div class="section-card">
+                        <div class="card-image">
+                            <img src="sample.jpg" alt="Kitchen Items">
+                        </div>
+                        <h3>Kitchen Items</h3>
+                        <p>Vintage Pyrex, glassware, utensils & retro kitchen decor</p>
+                    </div>
+                </div>
+
+                <div class="postmark">
+                    <p>✉️ Delivering vintage dreams directly to you! ✉️</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
