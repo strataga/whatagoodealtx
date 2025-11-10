@@ -77,6 +77,7 @@ const socialLinks = [
   { name: '📷 Instagram', href: 'https://www.instagram.com/whatagoodealtx/' },
   { name: '👍 Facebook', href: 'https://www.facebook.com/profile.php?id=61583154290122#' },
   { name: '🎥 TikTok', href: 'https://www.tiktok.com/@whatagoodealtx?is_from_webapp=1&sender_device=pc' },
+  { name: '📧 Email', href: 'mailto:jen@whatagoodealtx.com' },
 ]
 
 export default function Home() {
