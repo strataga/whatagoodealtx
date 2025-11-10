@@ -26,6 +26,14 @@ export default function Slideshow() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
 
+  // Preload all images on mount
+  useEffect(() => {
+    slides.forEach((slide) => {
+      const img = document.createElement('img')
+      img.src = slide.image
+    })
+  }, [])
+
   useEffect(() => {
     if (!isAutoPlaying) return
 
@@ -68,6 +76,7 @@ export default function Slideshow() {
               alt={`Slide ${slides[getPrevIndex()].id}`}
               fill
               style={{ objectFit: 'cover' }}
+              priority={currentSlide <= 1}
             />
           </div>
 
@@ -78,6 +87,7 @@ export default function Slideshow() {
               alt={`Slide ${slides[currentSlide].id}`}
               fill
               style={{ objectFit: 'cover' }}
+              priority={currentSlide === 0}
             />
           </div>
 
@@ -88,6 +98,7 @@ export default function Slideshow() {
               alt={`Slide ${slides[getNextIndex()].id}`}
               fill
               style={{ objectFit: 'cover' }}
+              priority={currentSlide === 0}
             />
           </div>
         </div>
