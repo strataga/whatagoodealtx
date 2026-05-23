@@ -1,6 +1,21 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import Script from 'next/script'
+import { Indie_Flower, Satisfy } from 'next/font/google'
+
+const satisfy = Satisfy({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-satisfy',
+  display: 'swap',
+})
+
+const indieFlower = Indie_Flower({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-indie-flower',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: 'WhataGoodealTX - Vintage & Antique Treasures',
@@ -24,11 +39,6 @@ export const metadata: Metadata = {
     apple: '/logo.png',
   },
   manifest: '/manifest.json',
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 5,
-  },
   openGraph: {
     title: 'WhataGoodealTX - Vintage & Antique Treasures',
     description: 'Discover authentic vintage clothing, retro electronics, antiques, and collectibles from the golden age. Shop unique treasures live on Whatnot.',
@@ -71,6 +81,12 @@ export const metadata: Metadata = {
   },
 }
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+}
+
 export default function RootLayout({
   children,
 }: {
@@ -97,13 +113,7 @@ export default function RootLayout({
   }
 
   return (
-    <html lang="en">
-      <head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Satisfy&family=Indie+Flower&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html lang="en" className={`${satisfy.variable} ${indieFlower.variable}`}>
       <body>
         <Script
           id="json-ld"

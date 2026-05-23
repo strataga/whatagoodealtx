@@ -90,7 +90,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
             <div className="success-message">
               <div className="success-icon">✓</div>
               <h3>Message sent!</h3>
-              <p>We'll get back to you soon!</p>
+              <p>We&apos;ll get back to you soon!</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="contact-form">
@@ -150,7 +150,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
           )}
 
           <div className="modal-footer">
-            <p>✉️ We'll reply to you soon! ✉️</p>
+            <p>✉️ We&apos;ll reply to you soon! ✉️</p>
           </div>
         </div>
       </div>
