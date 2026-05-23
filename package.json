@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "packageManager": "pnpm@9.0.0",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "workspaces": [
     "apps/*"
   ],
@@ -13,6 +16,6 @@
     "lint": "turbo run lint"
   },
   "devDependencies": {
-    "turbo": "^2.2.3"
+    "turbo": "^2.9.14"
   }
 }
