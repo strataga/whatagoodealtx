@@ -1,0 +1,11 @@
+digraph CodeMap {
+  rankdir=LR;
+  graph [fontname="Helvetica", labelloc="t", label="Code relationship map"];
+  node [shape=box, style="rounded,filled", fillcolor="#f8fafc", color="#334155", fontname="Helvetica", fontsize=10];
+  edge [color="#64748b", fontname="Helvetica", fontsize=9];
+  "web-page:auth" -> "support:run-content" [label="1"];
+  "web-page:run-content" -> "presentation:messaging" [label="1"];
+  "web-page:run-content" -> "presentation:web" [label="1"];
+  "web-page:run-content" -> "source:web" [label="1"];
+  "web-route:identity" -> "source:web" [label="1"];
+}

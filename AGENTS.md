@@ -17,6 +17,21 @@ Vintage retail website for antiques, collectibles, and local business presence. 
 - `pnpm build`
 - `pnpm lint`
 
+## Architecture Map
+
+- Code relationships live in `docs/architecture/code-map.md`.
+- Refresh after structural, route, package, or integration changes:
+
+  ```bash
+  python3 ~/.codex/skills/code-cartographer/scripts/code_cartographer.py --repo . --output docs/architecture/code-map.md --max-files 3000 --tool-timeout 30 --fail-on high
+  ```
+
+- Check freshness without rewriting tracked files:
+
+  ```bash
+  python3 ~/.codex/skills/code-cartographer/scripts/code_cartographer.py --repo . --output docs/architecture/code-map.md --max-files 3000 --tool-timeout 30 --check --fail-on high
+  ```
+
 ## Working Rules
 
 - Preserve the vintage/local-shop brand feel while keeping the site fast, accessible, and easy to update.
@@ -29,3 +44,5 @@ Vintage retail website for antiques, collectibles, and local business presence. 
 
 - Run the narrowest relevant pnpm script first, then `pnpm build` for route or config changes.
 - For email/contact changes, use test/local paths and redact secrets from all output.
+- Use `$code-cartographer` after structural changes and `$project-gap-curator`
+  before adding new repo-local automation or skills.
