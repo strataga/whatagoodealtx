@@ -5,10 +5,10 @@ Vintage retail website for antiques, collectibles, and local business presence. 
 ## Project Shape
 
 - Monorepo managed with Turborepo.
-- Web app: Next.js 14 App Router, TypeScript, and React.
+- Web app: Next.js 15 App Router, TypeScript, and React.
 - Integrations include Resend and Instagram content.
 - Deployment preference: Railway.
-- Package manager: `package.json` pins `pnpm@9.0.0`; use pnpm even if older README commands mention npm.
+- Package manager: `package.json` pins the exact pnpm version for Railway/Corepack; use that pinned pnpm version even if older README commands mention npm.
 
 ## Common Commands
 
