@@ -29,6 +29,39 @@ export function parseMoneyToCents(value, field = 'money') {
   return cents
 }
 
+export function validateCurrency(value, field = 'currency') {
+  const currency = String(value ?? '').trim().toUpperCase()
+  if (!/^[A-Z]{3}$/.test(currency)) {
+    throw new Error(`${field} must be a three-letter currency code.`)
+  }
+  return currency
+}
+
+const MONTHS = new Map(['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'].map((month, index) => [month, index]))
+const TIME_ZONE_OFFSETS = { PST: -8 * 60, PDT: -7 * 60, UTC: 0, GMT: 0 }
+
+export function parseEbayDateToIso(value, field = 'date') {
+  const input = String(value ?? '').trim()
+  const match = /^([A-Z][a-z]{2})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2}) (PST|PDT|UTC|GMT)$/.exec(input)
+  if (!match) throw new Error(`${field} is not a supported eBay timestamp.`)
+  const [, monthName, dayText, yearText, hourText, minuteText, secondText, zone] = match
+  const month = MONTHS.get(monthName)
+  const day = Number(dayText)
+  const year = 2000 + Number(yearText)
+  const hour = Number(hourText)
+  const minute = Number(minuteText)
+  const second = Number(secondText)
+  if (month == null || day < 1 || day > 31 || hour > 23 || minute > 59 || second > 59) {
+    throw new Error(`${field} contains an invalid date or time.`)
+  }
+  const localUtc = Date.UTC(year, month, day, hour, minute, second)
+  const localDate = new Date(localUtc)
+  if (localDate.getUTCFullYear() !== year || localDate.getUTCMonth() !== month || localDate.getUTCDate() !== day) {
+    throw new Error(`${field} contains an invalid calendar date.`)
+  }
+  return new Date(localUtc - TIME_ZONE_OFFSETS[zone] * 60_000).toISOString()
+}
+
 export function validateItemId(value) {
   const itemId = String(value ?? '').trim()
   if (!/^\d{9,19}$/.test(itemId)) {
@@ -115,11 +148,11 @@ export function collapseCatalogRows(rows, mediaItems) {
         sku: String(row['Custom label (SKU)'] ?? '').trim(),
         quantity,
         priceCents: parseMoneyToCents(rawPrice, `Listing ${itemId} price`),
-        currency: String(row.Currency ?? '').trim() || 'USD',
+        currency: validateCurrency(row.Currency, `Listing ${itemId} currency`),
         format: String(row.Format ?? '').trim(),
         variation: isVariation,
-        startDate: String(row['Start date'] ?? '').trim(),
-        endDate: String(row['End date'] ?? '').trim(),
+        startDate: parseEbayDateToIso(row['Start date'], `Listing ${itemId} start date`),
+        endDate: parseEbayDateToIso(row['End date'], `Listing ${itemId} end date`),
         condition: String(row.Condition ?? '').trim(),
         ebayCategory: String(row['eBay category 1 name'] ?? '').trim(),
         storeCategoryId: String(media.storeCategoryId ?? '').trim(),

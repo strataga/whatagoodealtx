@@ -3,14 +3,14 @@ digraph CodeMap {
   graph [fontname="Helvetica", labelloc="t", label="Code relationship map"];
   node [shape=box, style="rounded,filled", fillcolor="#f8fafc", color="#334155", fontname="Helvetica", fontsize=10];
   edge [color="#64748b", fontname="Helvetica", fontsize=9];
-  "source:auth" -> "source:identity" [label="2"];
+  "source:auth" -> "source:support" [label="2"];
   "web-page:run-content" -> "presentation:web" [label="2"];
   "presentation:identity" -> "presentation:web" [label="1"];
   "presentation:run-content" -> "presentation:web" [label="1"];
+  "source:identity" -> "source:support" [label="1"];
   "source:search" -> "source:web" [label="1"];
   "source:support" -> "source:auth" [label="1"];
-  "source:support" -> "source:identity" [label="1"];
-  "source:web" -> "source:identity" [label="1"];
+  "source:web" -> "source:support" [label="1"];
   "web-page:notifications" -> "presentation:identity" [label="1"];
   "web-page:notifications" -> "presentation:web" [label="1"];
   "web-page:notifications" -> "support:content" [label="1"];

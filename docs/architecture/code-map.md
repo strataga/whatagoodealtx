@@ -4,7 +4,7 @@
 
 ## Refresh
 
-- Source digest: `c2082e76ca7bf3d1`
+- Source digest: `b49c29c05c942951`
 - Command: `python3 ~/.codex/skills/code-cartographer/scripts/code_cartographer.py --repo . --output docs/architecture/code-map.md --max-files 3000 --tool-timeout 30 --fail-on high`
 - Relationship graph: `docs/architecture/code-map.svg`
 - Volatile run metadata: written to the JSON summary when `--json-output` is used.
@@ -41,10 +41,10 @@
 | Tool | Status | Command | Signal | Artifact |
 | --- | --- | --- | --- | --- |
 | graphviz | ok | dot -Tsvg docs/architecture/code-map.dot -o docs/architecture/code-map.svg | Rendered the relationship graph SVG from DOT. | docs/architecture/code-map.svg |
-| universal-ctags | ok | ctags --output-format=json --fields=+n -L build/code-cartographer/ctags-files.txt -f - | Indexed 258 symbols; top kinds: property=113, variable=47, function=43, constant=42, heading3=7 | build/code-cartographer/ctags-files.txt |
-| tokei | ok | tokei --output json . --exclude 'docs/architecture/code-map*' | Code lines: 10079; top languages: JSON=5368, YAML=2862, JavaScript=787, TSX=520, CSS=343 |  |
-| scc | ok | scc --format json --not-match '^docs/architecture/code\-map.*$' . | Complexity: 158; top languages: JSON=5368, CSV=976, JavaScript=787, TypeScript=626, CSS=343 |  |
-| cloc | ok | cloc --json --quiet --vcs git --exclude-list-file build/code-cartographer/cloc-exclude.txt | Files: 38; code lines: 11351; top languages: JSON=5368, YAML=2862, CSV=976, JavaScript=786, TypeScript=626 |  |
+| universal-ctags | ok | ctags --output-format=json --fields=+n -L build/code-cartographer/ctags-files.txt -f - | Indexed 267 symbols; top kinds: property=118, variable=48, function=45, constant=43, heading3=7 | build/code-cartographer/ctags-files.txt |
+| tokei | ok | tokei --output json . --exclude 'docs/architecture/code-map*' | Code lines: 10118; top languages: JSON=5368, YAML=2862, JavaScript=826, TSX=520, CSS=343 |  |
+| scc | ok | scc --format json --not-match '^docs/architecture/code\-map.*$' . | Complexity: 169; top languages: JSON=5368, CSV=976, JavaScript=826, TypeScript=626, CSS=343 |  |
+| cloc | ok | cloc --json --quiet --vcs git --exclude-list-file build/code-cartographer/cloc-exclude.txt | Files: 38; code lines: 11390; top languages: JSON=5368, YAML=2862, CSV=976, JavaScript=825, TypeScript=626 |  |
 | jscpd | ok | jscpd . --silent --reporters json --output build/code-cartographer/jscpd --min-lines 8 --min-tokens 80 --max-size 100kb --exit-code 0 --ignore '**/node_modules/**,**/target/**,**/dist/**,**/build/**,**/coverage/**,**/*.gen.ts,**/openapi.json,**/pnpm-lock.yaml,**/bun.lock,node_modules/**,.next/**,**/.next/**,.turbo/**,**/.turbo/**,dist/**,build/**,coverage/**,test-results/**,**/test-results/**,playwright-report/**,**/playwright-report/**,.env,.env.local,.env.*.local' | Duplicate blocks: 0; duplicated lines: 0; percentage: 0%. | build/code-cartographer/jscpd/jscpd-report.json |
 | cargo-depgraph | skipped | cargo depgraph | No Cargo.toml files found. |  |
 | cargo-deny | skipped | cargo-deny check | No Cargo.toml files found. |  |
@@ -70,16 +70,16 @@
 | Context | Files |
 | --- | --- |
 | web | 14 |
-| identity | 4 |
 | general | 3 |
+| identity | 3 |
 | run-content | 3 |
 | auth | 2 |
 | content | 2 |
 | search | 2 |
+| support | 2 |
 | abuse-control | 1 |
 | notifications | 1 |
 | settings | 1 |
-| support | 1 |
 
 ## Structural Findings
 
@@ -127,13 +127,13 @@ No architecture advisory errors detected by the current heuristics.
 | apps/web/data/catalog-media.json | support | abuse-control | JSON | 5235 |  |  |
 | apps/web/eslint.config.mjs | source | web | JavaScript | 20 |  | @eslint/eslintrc, node:path, node:url |
 | apps/web/next-env.d.ts | source | web | TypeScript | 7 |  |  |
-| apps/web/next.config.js | source | web | JavaScript | 19 |  | next |
+| apps/web/next.config.js | source | web | JavaScript | 20 |  | next |
 | apps/web/package.json | support | web | JSON | 41 |  |  |
 | apps/web/public/manifest.json | support | web | JSON | 18 |  |  |
 | apps/web/public/slides/convert.sh | source | web | Shell | 18 |  |  |
 | apps/web/scripts/catalog/build.mjs | source | identity | JavaScript | 76 | buildCatalog | better-sqlite3, node:fs, node:path, node:url |
-| apps/web/scripts/catalog/catalog-core.mjs | source | identity | JavaScript | 133 | REQUIRED_HEADERS, collapseCatalogRows, isUnexpired, listingUrlFor, parseCatalogCsv, parseMoneyToCents, validateItemId, validateThumbnailUrl | csv-parse |
-| apps/web/scripts/catalog/catalog-core.test.mjs | source | web | JavaScript | 63 | csv, media | node:assert, node:fs, node:test |
+| apps/web/scripts/catalog/catalog-core.mjs | source | support | JavaScript | 166 | REQUIRED_HEADERS, collapseCatalogRows, isUnexpired, listingUrlFor, parseCatalogCsv, parseEbayDateToIso, parseMoneyToCents, validateCurrency | csv-parse |
+| apps/web/scripts/catalog/catalog-core.test.mjs | source | web | JavaScript | 72 | csv, media | node:assert, node:fs, node:test |
 | apps/web/scripts/catalog/catalog-query.test.mjs | source | search | JavaScript | 48 |  | better-sqlite3, node:assert, node:fs, node:os, node:path, node:test |
 | apps/web/scripts/catalog/sync-support.mjs | source | auth | JavaScript | 254 | array, atomicWriteJson, defaultExternalPaths, fetchAccessToken, fetchLiveMedia, flattenCategories, loadDatabaseFallbacks, parseSellingPage | better-sqlite3, fast-xml-parser, node:fs, node:path |
 | apps/web/scripts/catalog/sync-support.test.mjs | source | auth | JavaScript | 67 |  | node:assert, node:fs, node:os, node:path, node:test |
