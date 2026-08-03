@@ -73,7 +73,7 @@ import Slideshow from '@/components/Slideshow'
 // ]
 
 const socialLinks = [
-  { name: '📺 Whatnot', href: 'https://www.whatnot.com/user/whatagoodealtx' },
+  { name: '📺 Whatnot', href: 'https://www.whatnot.com/invite/whatagoodealtx' },
   { name: '🛒 eBay', href: 'https://www.ebay.com/usr/whatagoodealtx' },
   { name: '📷 Instagram', href: 'https://www.instagram.com/whatagoodealtx' },
   { name: '👍 Facebook', href: 'https://www.facebook.com/profile.php?id=61583154290122#' },

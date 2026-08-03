@@ -100,7 +100,7 @@ export default function RootLayout({
     url: 'https://whatagoodealtx.com',
     logo: 'https://whatagoodealtx.com/logo.png',
     sameAs: [
-      'https://www.whatnot.com/user/whatagoodealtx',
+      'https://www.whatnot.com/invite/whatagoodealtx',
       'https://www.instagram.com/whatagoodealtx/',
       'https://www.facebook.com/profile.php?id=61583154290122',
       'https://www.tiktok.com/@whatagoodealtx',
