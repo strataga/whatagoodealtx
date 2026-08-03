@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 }
 
 export default function Home() {
-  const newest = getNewestItems(8) as CatalogItem[]
+  const newest = getNewestItems(8) as Array<CatalogItem>
   const departments = listDepartments() as { name: string; itemCount: number }[]
   const totalItems = departments.reduce((total, department) => total + department.itemCount, 0)
   const collage = newest.slice(0, 5)
