@@ -8,10 +8,10 @@ import {
   defaultExternalPaths,
   fetchAccessToken,
   fetchLiveMedia,
-  loadDatabaseFallbacks,
+  loadOptionalDatabaseFallbacks,
+  mergeActiveCatalogMedia,
   readEnvFile,
   redactError,
-  resolveCategoryName,
 } from './sync-support.mjs'
 
 function parseArgs(argv) {
@@ -48,21 +48,8 @@ async function main() {
     const { accessToken, environment } = await fetchAccessToken(env)
     secrets.push(accessToken)
     const live = await fetchLiveMedia(environment, accessToken)
-    const liveById = new Map(live.items.map((item) => [item.itemId, item]))
-    const fallbacks = loadDatabaseFallbacks(args.databasePath)
-    const items = [...activeIds].sort().map((itemId) => {
-      const current = liveById.get(itemId)
-      const fallback = fallbacks.get(itemId)
-      const thumbnailUrl = current?.thumbnailUrl || fallback?.thumbnailUrl
-      if (!thumbnailUrl) throw new Error(`Active CSV listing ${itemId} has no valid current thumbnail.`)
-      const storeCategoryId = current?.storeCategoryId || fallback?.storeCategoryId || '1'
-      return {
-        itemId,
-        thumbnailUrl,
-        storeCategoryId,
-        categoryName: resolveCategoryName(storeCategoryId, live.categories),
-      }
-    })
+    const fallbacks = loadOptionalDatabaseFallbacks(args.databasePath)
+    const items = mergeActiveCatalogMedia(activeIds, live, fallbacks)
     const snapshot = {
       version: 1,
       generatedAt: new Date().toISOString(),

@@ -267,6 +267,15 @@ export function loadDatabaseFallbacks(databasePath, now = new Date()) {
   }
 }
 
+export function loadOptionalDatabaseFallbacks(databasePath, now = new Date()) {
+  try {
+    return loadDatabaseFallbacks(databasePath, now)
+  } catch (error) {
+    if (['SQLITE_CANTOPEN', 'ENOENT', 'EACCES'].includes(error?.code)) return new Map()
+    throw error
+  }
+}
+
 export function redactError(error, secrets = []) {
   let message = error instanceof Error ? error.message : String(error)
   for (const secret of secrets.filter(Boolean)) message = message.split(secret).join('[REDACTED]')
@@ -295,6 +304,24 @@ export function resolveCategoryName(categoryId, categories) {
     current = byId.get(current.parentCategoryId)
   }
   return current?.name || 'Other'
+}
+
+export function mergeActiveCatalogMedia(activeIds, live, fallbacks) {
+  const liveById = new Map(live.items.map((item) => [item.itemId, item]))
+  return [...activeIds].sort().map((itemId) => {
+    const current = liveById.get(itemId)
+    if (!current) throw new Error(`CSV listing ${itemId} is not present in the active eBay response.`)
+    const fallback = fallbacks.get(itemId)
+    const thumbnailUrl = current.thumbnailUrl || fallback?.thumbnailUrl
+    if (!thumbnailUrl) throw new Error(`Active CSV listing ${itemId} has no valid current thumbnail.`)
+    const storeCategoryId = current.storeCategoryId || fallback?.storeCategoryId || '1'
+    return {
+      itemId,
+      thumbnailUrl,
+      storeCategoryId,
+      categoryName: resolveCategoryName(storeCategoryId, live.categories),
+    }
+  })
 }
 
 export function defaultExternalPaths(homeDirectory) {

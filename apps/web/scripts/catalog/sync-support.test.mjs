@@ -5,7 +5,7 @@ import path from 'node:path'
 import test from 'node:test'
 import Database from 'better-sqlite3'
 import { isUnexpired, validateThumbnailUrl } from './catalog-core.mjs'
-import { atomicWriteJson, fetchAccessToken, loadDatabaseFallbacks, parseOptionalLiveThumbnail, parseSellingPage, parseStoreCategories, redactError, resolveCategoryName, selectFirstValidThumbnail } from './sync-support.mjs'
+import { atomicWriteJson, fetchAccessToken, loadDatabaseFallbacks, loadOptionalDatabaseFallbacks, mergeActiveCatalogMedia, parseOptionalLiveThumbnail, parseSellingPage, parseStoreCategories, redactError, resolveCategoryName, selectFirstValidThumbnail } from './sync-support.mjs'
 
 test('parses Trading pagination, gallery URLs, and Storefront categories', () => {
   const page = parseSellingPage(`
@@ -75,6 +75,26 @@ test('Storefront category resolution is bounded and rejects cycles', () => {
     { categoryId: '1', parentCategoryId: '2', name: 'Cycle A' },
     { categoryId: '2', parentCategoryId: '1', name: 'Cycle B' },
   ]), 'Other')
+})
+
+test('catalog merge requires live confirmation before using stored fallback media', () => {
+  const itemId = '327123456789'
+  const fallback = new Map([[itemId, { thumbnailUrl: 'https://i.ebayimg.com/images/g/stale/s-l500.jpg' }]])
+  assert.throws(
+    () => mergeActiveCatalogMedia(new Set([itemId]), { items: [], categories: [] }, fallback),
+    /not present in the active eBay response/,
+  )
+  const [item] = mergeActiveCatalogMedia(
+    new Set([itemId]),
+    { items: [{ itemId, thumbnailUrl: '', storeCategoryId: '1' }], categories: [{ categoryId: '1', parentCategoryId: '', name: 'Other' }] },
+    fallback,
+  )
+  assert.equal(item.thumbnailUrl, 'https://i.ebayimg.com/images/g/stale/s-l500.jpg')
+})
+
+test('unavailable optional fallback storage behaves as an empty source', () => {
+  const missingPath = path.join(os.tmpdir(), `wgdtx-missing-${process.pid}-${Date.now()}.sqlite`)
+  assert.deepEqual(loadOptionalDatabaseFallbacks(missingPath), new Map())
 })
 
 test('thumbnail allowlist rejects lookalike hosts and non-HTTPS URLs', () => {
