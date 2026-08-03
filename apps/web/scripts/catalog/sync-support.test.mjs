@@ -114,7 +114,8 @@ test('missing or incompatible optional fallback storage behaves as an empty sour
 })
 
 test('thumbnail allowlist rejects lookalike hosts and non-HTTPS URLs', () => {
-  assert.equal(validateThumbnailUrl('https://i.ebayimg.com/images/g/a/s-l500.jpg'), 'https://i.ebayimg.com/images/g/a/s-l500.jpg')
+  assert.equal(validateThumbnailUrl('https://i.ebayimg.com/images/g/a/s-l140.jpg'), 'https://i.ebayimg.com/images/g/a/s-l1600.jpg')
+  assert.equal(validateThumbnailUrl('https://i.ebayimg.com/images/g/a/s-l500.jpg?quality=80'), 'https://i.ebayimg.com/images/g/a/s-l1600.jpg?quality=80')
   assert.throws(() => validateThumbnailUrl('http://i.ebayimg.com/a.jpg'), /HTTPS/)
   assert.throws(() => validateThumbnailUrl('https://i.ebayimg.com.example.com/a.jpg'), /exactly i.ebayimg.com/)
 })
@@ -136,7 +137,7 @@ test('thumbnail candidate policy selects the first independently valid URL', () 
       'https://i.ebayimg.com.example.com/unsafe.jpg',
       'https://i.ebayimg.com/images/g/safe/s-l500.jpg',
     ),
-    'https://i.ebayimg.com/images/g/safe/s-l500.jpg',
+    'https://i.ebayimg.com/images/g/safe/s-l1600.jpg',
   )
   assert.equal(selectFirstValidThumbnail('', 'http://i.ebayimg.com/unsafe.jpg'), '')
 })
@@ -170,8 +171,8 @@ test('stored fallback uses the standard image when the preferred URL is blank or
   db.close()
   try {
     const fallbacks = loadDatabaseFallbacks(databasePath, new Date('2026-08-03T12:00:00Z'))
-    assert.equal(fallbacks.get('327123456789').thumbnailUrl, 'https://i.ebayimg.com/images/g/fallback/s-l500.jpg')
-    assert.equal(fallbacks.get('327123456790').thumbnailUrl, 'https://i.ebayimg.com/images/g/safe/s-l500.jpg')
+    assert.equal(fallbacks.get('327123456789').thumbnailUrl, 'https://i.ebayimg.com/images/g/fallback/s-l1600.jpg')
+    assert.equal(fallbacks.get('327123456790').thumbnailUrl, 'https://i.ebayimg.com/images/g/safe/s-l1600.jpg')
   } finally {
     await rm(directory, { recursive: true })
   }

@@ -87,6 +87,7 @@ export function validateThumbnailUrl(value) {
   url.username = ''
   url.password = ''
   url.hash = ''
+  url.pathname = url.pathname.replace(/\/s-l\d+\.(jpe?g|png|webp)$/i, '/s-l1600.$1')
   return url.toString()
 }
 
