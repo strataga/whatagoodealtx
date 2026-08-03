@@ -4,7 +4,7 @@
 
 ## Refresh
 
-- Source digest: `c11c32addbd9e83d`
+- Source digest: `312b1106c68c303e`
 - Command: `python3 ~/.codex/skills/code-cartographer/scripts/code_cartographer.py --repo . --output docs/architecture/code-map.md --max-files 3000 --tool-timeout 30 --fail-on high`
 - Relationship graph: `docs/architecture/code-map.svg`
 - Volatile run metadata: written to the JSON summary when `--json-output` is used.
@@ -27,10 +27,10 @@
 
 | Language | Files |
 | --- | --- |
-| JSON | 5 |
+| JavaScript | 10 |
+| TypeScript React | 10 |
+| JSON | 6 |
 | TypeScript | 5 |
-| TypeScript React | 4 |
-| JavaScript | 2 |
 | YAML | 2 |
 | CSS | 1 |
 | HTML | 1 |
@@ -41,11 +41,11 @@
 | Tool | Status | Command | Signal | Artifact |
 | --- | --- | --- | --- | --- |
 | graphviz | ok | dot -Tsvg docs/architecture/code-map.dot -o docs/architecture/code-map.svg | Rendered the relationship graph SVG from DOT. | docs/architecture/code-map.svg |
-| universal-ctags | ok | ctags --output-format=json --fields=+n -L build/code-cartographer/ctags-files.txt -f - | Indexed 70 symbols; top kinds: property=24, constant=21, variable=9, heading3=7, function=4 | build/code-cartographer/ctags-files.txt |
-| tokei | ok | tokei --output json . --exclude 'docs/architecture/code-map*' | Code lines: 4534; top languages: YAML=2807, CSS=827, TSX=425, TypeScript=237, JSON=112 |  |
-| scc | ok | scc --format json --not-match '^docs/architecture/code\-map.*$' . | Complexity: 38; top languages: CSS=827, TypeScript=665, HTML=284, Markdown=130, JSON=112 |  |
-| cloc | ok | cloc --json --quiet --vcs git --exclude-list-file build/code-cartographer/cloc-exclude.txt | Files: 24; code lines: 4868; top languages: YAML=2807, CSS=827, TypeScript=658, HTML=284, Markdown=130 |  |
-| jscpd | ok | jscpd . --silent --reporters json --output build/code-cartographer/jscpd --min-lines 8 --min-tokens 80 --max-size 100kb --exitCode 0 --ignore '**/node_modules/**,**/target/**,**/dist/**,**/build/**,**/coverage/**,**/*.gen.ts,**/openapi.json,**/pnpm-lock.yaml,**/bun.lock,node_modules/**,.next/**,**/.next/**,.turbo/**,**/.turbo/**,dist/**,build/**,coverage/**,test-results/**,**/test-results/**,playwright-report/**,**/playwright-report/**,.env,.env.local,.env.*.local' | Duplicate blocks: 0; duplicated lines: 0; percentage: 0%. | build/code-cartographer/jscpd/jscpd-report.json |
+| universal-ctags | ok | ctags --output-format=json --fields=+n -L build/code-cartographer/ctags-files.txt -f - | Indexed 265 symbols; top kinds: property=113, constant=48, variable=47, function=44, heading3=7 | build/code-cartographer/ctags-files.txt |
+| tokei | ok | tokei --output json . --exclude 'docs/architecture/code-map*' | Code lines: 10353; top languages: JSON=5357, YAML=2876, JavaScript=787, TSX=657, CSS=343 |  |
+| scc | ok | scc --format json --not-match '^docs/architecture/code\-map.*$' . | Complexity: 176; top languages: JSON=5357, CSV=976, TypeScript=898, JavaScript=787, CSS=343 |  |
+| cloc | ok | cloc --json --quiet --vcs git --exclude-list-file build/code-cartographer/cloc-exclude.txt | Files: 24; code lines: 4418; top languages: YAML=2876, TypeScript=648, CSS=343, HTML=284, JSON=123 |  |
+| jscpd | ok | jscpd . --silent --reporters json --output build/code-cartographer/jscpd --min-lines 8 --min-tokens 80 --max-size 100kb --exit-code 0 --ignore '**/node_modules/**,**/target/**,**/dist/**,**/build/**,**/coverage/**,**/*.gen.ts,**/openapi.json,**/pnpm-lock.yaml,**/bun.lock,node_modules/**,.next/**,**/.next/**,.turbo/**,**/.turbo/**,dist/**,build/**,coverage/**,test-results/**,**/test-results/**,playwright-report/**,**/playwright-report/**,.env,.env.local,.env.*.local' | Duplicate blocks: 0; duplicated lines: 0; percentage: 0%. | build/code-cartographer/jscpd/jscpd-report.json |
 | cargo-depgraph | skipped | cargo depgraph | No Cargo.toml files found. |  |
 | cargo-deny | skipped | cargo-deny check | No Cargo.toml files found. |  |
 | ast-grep | available | ast-grep scan | Installed; no project config found, so the cartographer did not run it. |  |
@@ -53,31 +53,34 @@
 | actionlint | skipped | actionlint -oneline -no-color | No .github/workflows directory found. |  |
 | shellcheck | error | shellcheck -x apps/web/public/slides/convert.sh | In apps/web/public/slides/convert.sh line 3: cd /Users/jason/projects/whatagooddeal/apps/web/public/slides ^-- SC2164 (warning): Use 'cd ... \|\| exit' or 'cd ... \|\| return' in case cd fails. Did you mean: cd /Users/jason/projects/whatagoo... |  |
 | yamllint | available | yamllint -f parsable . | Installed; no yamllint config found, so the cartographer did not run it. |  |
-| tree-sitter | available | tree-sitter --version | tree-sitter 0.26.9 |  |
+| tree-sitter | available | tree-sitter --version | tree-sitter 0.26.11 |  |
 
 ## Layer Inventory
 
 | Layer | Files |
 | --- | --- |
-| support | 8 |
-| source | 7 |
-| presentation | 2 |
-| web-page | 2 |
+| source | 15 |
+| support | 9 |
+| presentation | 6 |
+| web-page | 4 |
 | web-route | 2 |
 
 ## Bounded Context Signals
 
 | Context | Files |
 | --- | --- |
-| web | 7 |
+| web | 13 |
+| identity | 5 |
 | general | 3 |
 | run-content | 3 |
 | auth | 2 |
-| identity | 2 |
-| content | 1 |
+| content | 2 |
+| notifications | 2 |
+| search | 2 |
+| abuse-control | 1 |
 | messaging | 1 |
-| notifications | 1 |
 | settings | 1 |
+| support | 1 |
 
 ## Structural Findings
 
@@ -97,34 +100,64 @@ No architecture advisory errors detected by the current heuristics.
 
 | From | Imports / References |
 | --- | --- |
+| apps/web/scripts/catalog/build.mjs | apps/web/scripts/catalog/catalog-core.mjs |
+| apps/web/scripts/catalog/catalog-core.test.mjs | apps/web/scripts/catalog/catalog-core.mjs |
+| apps/web/scripts/catalog/catalog-query.test.mjs | apps/web/src/catalog/catalog.mjs |
+| apps/web/scripts/catalog/sync-support.mjs | apps/web/scripts/catalog/catalog-core.mjs |
+| apps/web/scripts/catalog/sync-support.test.mjs | apps/web/scripts/catalog/catalog-core.mjs |
+| apps/web/scripts/catalog/sync-support.test.mjs | apps/web/scripts/catalog/sync-support.mjs |
+| apps/web/scripts/catalog/sync.mjs | apps/web/scripts/catalog/catalog-core.mjs |
+| apps/web/scripts/catalog/sync.mjs | apps/web/scripts/catalog/sync-support.mjs |
 | apps/web/src/app/api/instagram/route.ts | apps/web/src/types/instagram.ts |
 | apps/web/src/app/layout.tsx | apps/web/src/app/globals.css |
-| apps/web/src/app/page.tsx | apps/web/src/components/ContactModal.tsx |
-| apps/web/src/app/page.tsx | apps/web/src/components/Slideshow.tsx |
-| apps/web/src/app/page.tsx | apps/web/src/types/instagram.ts |
+| apps/web/src/app/layout.tsx | apps/web/src/components/SiteFooter.tsx |
+| apps/web/src/app/layout.tsx | apps/web/src/components/SiteHeader.tsx |
+| apps/web/src/app/page.tsx | apps/web/src/catalog/catalog.mjs |
+| apps/web/src/app/page.tsx | apps/web/src/components/ProductCard.tsx |
+| apps/web/src/app/page.tsx | apps/web/src/components/SafeCatalogImage.tsx |
+| apps/web/src/app/page.tsx | apps/web/src/components/SiteHeader.tsx |
+| apps/web/src/app/shop/page.tsx | apps/web/src/catalog/catalog.mjs |
+| apps/web/src/app/shop/page.tsx | apps/web/src/components/ProductCard.tsx |
+| apps/web/src/components/ProductCard.tsx | apps/web/src/components/SafeCatalogImage.tsx |
+| apps/web/src/components/SiteFooter.tsx | apps/web/src/components/SiteHeader.tsx |
 
 ## File Atlas
 
 | Path | Layer | Context | Language | Lines | Symbols | External Imports |
 | --- | --- | --- | --- | --- | --- | --- |
+| apps/web/data/catalog-media.json | support | abuse-control | JSON | 5235 |  |  |
 | apps/web/eslint.config.mjs | source | web | JavaScript | 20 |  | @eslint/eslintrc, node:path, node:url |
 | apps/web/next-env.d.ts | source | web | TypeScript | 7 |  |  |
-| apps/web/next.config.js | source | content | JavaScript | 22 |  | next |
-| apps/web/package.json | support | web | JSON | 27 |  |  |
-| apps/web/public/manifest.json | support | auth | JSON | 18 |  |  |
+| apps/web/next.config.js | source | web | JavaScript | 19 |  | next |
+| apps/web/package.json | support | web | JSON | 35 |  |  |
+| apps/web/public/manifest.json | support | web | JSON | 18 |  |  |
 | apps/web/public/slides/convert.sh | source | identity | Shell | 17 |  |  |
+| apps/web/scripts/catalog/build.mjs | source | identity | JavaScript | 76 | buildCatalog | better-sqlite3, node:fs, node:path, node:url |
+| apps/web/scripts/catalog/catalog-core.mjs | source | identity | JavaScript | 133 | REQUIRED_HEADERS, collapseCatalogRows, isUnexpired, listingUrlFor, parseCatalogCsv, parseMoneyToCents, validateItemId, validateThumbnailUrl | csv-parse |
+| apps/web/scripts/catalog/catalog-core.test.mjs | source | web | JavaScript | 63 | csv, media | node:assert, node:fs, node:test |
+| apps/web/scripts/catalog/catalog-query.test.mjs | source | search | JavaScript | 48 |  | better-sqlite3, node:assert, node:fs, node:os, node:path, node:test |
+| apps/web/scripts/catalog/sync-support.mjs | source | auth | JavaScript | 254 | array, atomicWriteJson, defaultExternalPaths, fetchAccessToken, fetchLiveMedia, flattenCategories, loadDatabaseFallbacks, parseSellingPage | better-sqlite3, fast-xml-parser, node:fs, node:path |
+| apps/web/scripts/catalog/sync-support.test.mjs | source | auth | JavaScript | 67 |  | node:assert, node:fs, node:os, node:path, node:test |
+| apps/web/scripts/catalog/sync.mjs | source | support | JavaScript | 85 | main, parseArgs | node:fs, node:path, node:process |
 | apps/web/src/app/api/contact/route.ts | web-route | notifications | TypeScript | 147 | POST | next, resend |
 | apps/web/src/app/api/instagram/route.ts | web-route | identity | TypeScript | 91 | GET, transformToFeaturedItem | next |
-| apps/web/src/app/globals.css | support | run-content | CSS | 980 |  |  |
-| apps/web/src/app/layout.tsx | web-page | auth | TypeScript React | 128 | metadata, viewport | next |
-| apps/web/src/app/page.tsx | web-page | run-content | TypeScript React | 187 |  | next, react |
-| apps/web/src/app/sitemap.ts | source | web | TypeScript | 13 |  | next |
+| apps/web/src/app/globals.css | support | content | CSS | 360 |  |  |
+| apps/web/src/app/layout.tsx | web-page | notifications | TypeScript React | 73 | metadata, viewport | next |
+| apps/web/src/app/page.tsx | web-page | run-content | TypeScript React | 97 | metadata | next |
+| apps/web/src/app/shop/error.tsx | web-page | content | TypeScript React | 20 |  | next |
+| apps/web/src/app/shop/page.tsx | web-page | search | TypeScript React | 109 | ShopSearchParams, metadata, pageHref | next |
+| apps/web/src/app/sitemap.ts | source | web | TypeScript | 17 |  | next |
+| apps/web/src/catalog/catalog.mjs | source | web | JavaScript | 102 | PAGE_SIZE, SORTS, databasePath, escapeLike, first, getNewestItems, listDepartments, normalizeCatalogParams | better-sqlite3, node:path |
 | apps/web/src/components/ContactModal.tsx | presentation | messaging | TypeScript React | 160 | ContactModalProps | next, react |
+| apps/web/src/components/ProductCard.tsx | presentation | run-content | TypeScript React | 54 | CatalogItem, formatPrice |  |
+| apps/web/src/components/SafeCatalogImage.tsx | presentation | web | TypeScript React | 28 | SafeCatalogImageProps | next, react |
+| apps/web/src/components/SiteFooter.tsx | presentation | identity | TypeScript React | 37 |  | next |
+| apps/web/src/components/SiteHeader.tsx | presentation | web | TypeScript React | 27 |  | next |
 | apps/web/src/components/Slideshow.tsx | presentation | web | TypeScript React | 137 |  | next, react |
 | apps/web/src/types/instagram.ts | source | web | TypeScript | 29 | FeaturedItem, InstagramPost, InstagramResponse |  |
 | apps/web/tsconfig.json | support | web | JSON | 28 |  |  |
-| mockup/mockup-6-postcard.html | source | run-content | HTML | 315 |  |  |
-| package.json | support | general | JSON | 22 |  |  |
-| pnpm-lock.yaml | support | settings | YAML | 3538 |  |  |
+| mockup/mockup-6-postcard.html | source | run-content | HTML | 316 |  |  |
+| package.json | support | general | JSON | 25 |  |  |
+| pnpm-lock.yaml | support | settings | YAML | 3631 |  |  |
 | pnpm-workspace.yaml | support | general | YAML | 13 |  |  |
 | turbo.json | support | general | JSON | 22 |  |  |

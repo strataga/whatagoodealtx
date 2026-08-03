@@ -4,17 +4,14 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'scontent.cdninstagram.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'scontent-*.cdninstagram.com',
-      },
-      {
-        protocol: 'https',
-        hostname: '**.cdninstagram.com',
+        hostname: 'i.ebayimg.com',
+        pathname: '/**',
       },
     ],
+  },
+  outputFileTracingIncludes: {
+    '/shop': ['./data/catalog.sqlite'],
+    '/': ['./data/catalog.sqlite'],
   },
 }
 

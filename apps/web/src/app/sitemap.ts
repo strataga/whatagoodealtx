@@ -3,10 +3,14 @@ import { MetadataRoute } from 'next'
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: 'https://whatagoodealtx.com',
-      lastModified: new Date(),
+      url: 'https://www.whatagoodealtx.com',
       changeFrequency: 'weekly',
       priority: 1,
+    },
+    {
+      url: 'https://www.whatagoodealtx.com/shop',
+      changeFrequency: 'daily',
+      priority: 0.9,
     },
   ]
 }

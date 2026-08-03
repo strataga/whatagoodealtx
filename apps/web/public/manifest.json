@@ -1,11 +1,11 @@
 {
   "name": "WhataGoodealTX - Vintage & Antique Treasures",
   "short_name": "WhataGoodealTX",
-  "description": "Discover authentic vintage clothing, retro electronics, antiques, and collectibles from the golden age",
+  "description": "Vintage treasures, collectibles, music, toys, home finds, and oddities from WhataGoodealTX.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#fff8dc",
-  "theme_color": "#ff6b9d",
+  "background_color": "#fffdf7",
+  "theme_color": "#082e55",
   "icons": [
     {
       "src": "/logo.png",

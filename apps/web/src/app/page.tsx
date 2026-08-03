@@ -1,186 +1,96 @@
-'use client'
+import type { Metadata } from 'next'
+import Link from 'next/link'
+import SafeCatalogImage from '@/components/SafeCatalogImage'
+import ProductCard, { type CatalogItem } from '@/components/ProductCard'
+import { EBAY_URL, WHATNOT_URL } from '@/components/SiteHeader'
+import { getNewestItems, listDepartments } from '@/catalog/catalog.mjs'
 
-// import { useState, useEffect } from 'react'
-import Image from 'next/image'
-// import ContactModal from '@/components/ContactModal'
-import Slideshow from '@/components/Slideshow'
-// import type { FeaturedItem } from '@/types/instagram'
-
-// const defaultCategories = [
-//   {
-//     id: '1',
-//     title: 'Vintage Fashion',
-//     description: 'Authentic 50s clothing & accessories from the golden era of style',
-//     image: '/sample.jpg',
-//     link: '#',
-//   },
-//   {
-//     id: '2',
-//     title: 'Retro Electronics',
-//     description: 'Classic radios, record players & vintage gadgets that still work',
-//     image: '/sample.jpg',
-//     link: '#',
-//   },
-//   {
-//     id: '3',
-//     title: 'Antiques',
-//     description: 'Rare collectible treasures and one-of-a-kind vintage finds',
-//     image: '/sample.jpg',
-//     link: '#',
-//   },
-//   {
-//     id: '4',
-//     title: 'Vintage Books',
-//     description: 'First editions, classic literature & vintage magazines',
-//     image: '/sample.jpg',
-//     link: '#',
-//   },
-//   {
-//     id: '5',
-//     title: 'Retro Art',
-//     description: 'Original 50s prints, paintings & nostalgic wall decor',
-//     image: '/sample.jpg',
-//     link: '#',
-//   },
-//   {
-//     id: '6',
-//     title: 'Kitchen Items',
-//     description: 'Vintage Pyrex, glassware, utensils & retro kitchen decor',
-//     image: '/sample.jpg',
-//     link: '#',
-//   },
-//   {
-//     id: '7',
-//     title: 'Vintage Toys',
-//     description: 'Classic toys and games from the 1950s',
-//     image: '/sample.jpg',
-//     link: '#',
-//   },
-//   {
-//     id: '8',
-//     title: 'Retro Furniture',
-//     description: 'Mid-century modern furniture and home decor',
-//     image: '/sample.jpg',
-//     link: '#',
-//   },
-//   {
-//     id: '9',
-//     title: 'Collectibles',
-//     description: 'Unique vintage collectibles and memorabilia',
-//     image: '/sample.jpg',
-//     link: '#',
-//   },
-// ]
-
-const socialLinks = [
-  { name: '📺 Whatnot', href: 'https://www.whatnot.com/invite/whatagoodealtx' },
-  { name: '🛒 eBay', href: 'https://www.ebay.com/usr/whatagoodealtx' },
-  { name: '📷 Instagram', href: 'https://www.instagram.com/whatagoodealtx' },
-  { name: '👍 Facebook', href: 'https://www.facebook.com/profile.php?id=61583154290122#' },
-  { name: '🎥 TikTok', href: 'https://www.tiktok.com/@whatagoodealtx?is_from_webapp=1&sender_device=pc' },
-  { name: '📧 Email', href: 'mailto:jen@whatagoodealtx.com' },
-]
+export const metadata: Metadata = {
+  title: 'Vintage finds, collectibles & oddities',
+  description: 'Shop WhataGoodealTX vintage treasures, collectibles, music, toys, home finds, and oddities on eBay and Whatnot.',
+  alternates: { canonical: '/' },
+}
 
 export default function Home() {
-  // const [isModalOpen, setIsModalOpen] = useState(false)
-  // const [items, setItems] = useState<FeaturedItem[]>(defaultCategories)
-  // const [loading, setLoading] = useState(true)
-
-  // useEffect(() => {
-  //   const fetchInstagramPosts = async () => {
-  //     try {
-  //       const response = await fetch('/api/instagram')
-  //       if (response.ok) {
-  //         const data = await response.json()
-  //         if (data.posts && data.posts.length > 0) {
-  //           setItems(data.posts)
-  //         }
-  //       }
-  //     } catch (error) {
-  //       console.error('Failed to fetch Instagram posts:', error)
-  //       // Keep default categories on error
-  //     } finally {
-  //       setLoading(false)
-  //     }
-  //   }
-
-  //   fetchInstagramPosts()
-  // }, [])
+  const newest = getNewestItems(8) as CatalogItem[]
+  const departments = listDepartments() as { name: string; itemCount: number }[]
+  const totalItems = departments.reduce((total, department) => total + department.itemCount, 0)
+  const collage = newest.slice(0, 5)
 
   return (
-    <>
-      <div className="postcard-container">
-      <div className="postcard">
-        <div className="postcard-front">
-          <div className="postcard-header">
-            <div className="logo-stamp">
-              <Image
-                src="/logo.png"
-                alt="WhataGoodealTX Logo"
-                width={400}
-                height={400}
-                priority
-              />
-            </div>
-            <h1>WhataGoodealTX</h1>
-
-            <div className="wish-you-were-here">
-              <h2>Wish You Were Here!</h2>
-              <div className="social-stamps">
-                {socialLinks.map((link) => (
-                  <a key={link.name} href={link.href} target="_blank" className="stamp">
-                    {link.name}
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            <Slideshow />
+    <main id="main-content">
+      <section className="hero section-shell" aria-labelledby="hero-title">
+        <div className="hero-copy">
+          <p className="ribbon-label">Curated in Texas · Shipped with care</p>
+          <h1 id="hero-title">Good finds deserve a second life.</h1>
+          <p className="hero-lede">Vintage treasures, collectibles, music, toys, home finds, and wonderfully unexpected oddities—chosen one good find at a time.</p>
+          <div className="hero-actions" aria-label="Choose where to shop">
+            <a className="button button--red" href={EBAY_URL} target="_blank" rel="noopener noreferrer">Shop the eBay store <span aria-hidden="true">↗</span></a>
+            <a className="button button--navy" href={WHATNOT_URL} target="_blank" rel="noopener noreferrer">Join us on Whatnot <span aria-hidden="true">↗</span></a>
           </div>
-
-          {/* <div className="postcard-sections">
-            {items.map((item) => (
-              <a
-                key={item.id}
-                href={item.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="section-card"
-                style={{ textDecoration: 'none', color: 'inherit' }}
-              >
-                <div className="card-image">
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    width={400}
-                    height={200}
-                  />
-                </div>
-                <h3>{item.title}</h3>
-                <p>{item.description}</p>
-              </a>
-            ))}
-          </div> */}
-
-          <div className="postmark">
-            <p>Delivering vintage dreams directly to you!</p>
-          </div>
+          <Link className="shop-catalog-link" href="/shop">Or browse our full eBay catalog here <span aria-hidden="true">→</span></Link>
         </div>
-      </div>
-      </div>
+        <div className="hero-collage" aria-label="A selection of our newest finds">
+          {collage.map((item, index) => (
+            <a key={item.item_id} className={`collage-item collage-item--${index + 1}`} href={item.listing_url} target="_blank" rel="noopener noreferrer">
+              <SafeCatalogImage src={item.thumbnail_url} alt={item.title} sizes="(max-width: 800px) 42vw, 240px" priority={index < 2} />
+            </a>
+          ))}
+          <span className="collage-sticker" aria-hidden="true">Fresh finds!</span>
+        </div>
+      </section>
 
-      {/* Floating Contact Button */}
-      {/*<button
-        className="contact-trigger"
-        onClick={() => setIsModalOpen(true)}
-        aria-label="Open contact form"
-      >
-        ✉️
-      </button>*/}
+      <section className="departments section-shell" aria-labelledby="departments-title">
+        <div className="section-heading">
+          <div><p className="eyebrow">Something for every collector</p><h2 id="departments-title">Shop by department</h2></div>
+          <Link className="text-link" href="/shop">Browse all {totalItems.toLocaleString()} finds <span aria-hidden="true">→</span></Link>
+        </div>
+        <div className="department-grid">
+          {departments.map((department, index) => (
+            <Link key={department.name} className="department-card" href={`/shop?department=${encodeURIComponent(department.name)}`}>
+              <span className="department-number">{String(index + 1).padStart(2, '0')}</span>
+              <span><strong>{department.name}</strong><small>{department.itemCount} finds</small></span>
+              <span aria-hidden="true">→</span>
+            </Link>
+          ))}
+        </div>
+      </section>
 
-      {/* Contact Modal 
-      <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-        */}
-    </>
+      <section className="newest section-shell" aria-labelledby="newest-title">
+        <div className="section-heading">
+          <div><p className="eyebrow">Just unpacked</p><h2 id="newest-title">Newly listed finds</h2></div>
+          <Link className="text-link" href="/shop?sort=newest">See what’s new <span aria-hidden="true">→</span></Link>
+        </div>
+        <div className="product-grid">
+          {newest.map((item) => <ProductCard key={item.item_id} item={item} />)}
+        </div>
+      </section>
+
+      <section className="trust-strip" aria-label="Why shop with WhataGoodealTX">
+        <div className="section-shell trust-grid">
+          <div><span aria-hidden="true">★</span><p><strong>Selling on eBay since 2006</strong><br />Years of treasure hunting and happy mail days.</p></div>
+          <div><span aria-hidden="true">✓</span><p><strong>Carefully inspected & described</strong><br />Clear details help every find reach the right home.</p></div>
+          <div><span aria-hidden="true">⌂</span><p><strong>Packed with care</strong><br />Thoughtful wrapping for the journey from us to you.</p></div>
+        </div>
+      </section>
+
+      <section className="platforms section-shell" aria-labelledby="platform-title">
+        <div className="section-heading section-heading--center"><div><p className="eyebrow">Two ways to treasure hunt</p><h2 id="platform-title">Meet us where you love to shop</h2></div></div>
+        <div className="platform-grid">
+          <article className="platform-panel platform-panel--ebay">
+            <p className="platform-kicker">Browse anytime</p>
+            <h3>Our eBay store</h3>
+            <p>Search the full collection, compare the details, and discover recently listed pieces at your own pace.</p>
+            <a className="button button--cream" href={EBAY_URL} target="_blank" rel="noopener noreferrer">Shop on eBay <span aria-hidden="true">↗</span></a>
+          </article>
+          <article className="platform-panel platform-panel--whatnot">
+            <p className="platform-kicker">Shop together</p>
+            <h3>Live on Whatnot</h3>
+            <p>Join the room for live finds, a little good-natured fun, and the thrill of seeing what comes up next.</p>
+            <a className="button button--cream" href={WHATNOT_URL} target="_blank" rel="noopener noreferrer">Join us on Whatnot <span aria-hidden="true">↗</span></a>
+          </article>
+        </div>
+      </section>
+    </main>
   )
 }

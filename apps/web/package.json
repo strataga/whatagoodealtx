@@ -4,11 +4,18 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "catalog:sync": "node scripts/catalog/sync.mjs",
+    "catalog:build": "node scripts/catalog/build.mjs",
+    "test:catalog": "node --test scripts/catalog/*.test.mjs",
+    "prebuild": "pnpm catalog:build",
     "build": "next build",
     "start": "next start",
     "lint": "eslint ."
   },
   "dependencies": {
+    "better-sqlite3": "^13.0.2",
+    "csv-parse": "^7.0.2",
+    "fast-xml-parser": "^5.10.1",
     "next": "15.5.18",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -16,6 +23,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.5",
+    "@types/better-sqlite3": "^9.6.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

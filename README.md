@@ -1,99 +1,46 @@
 # WhataGoodealTX
 
-A vintage-themed website for WhataGoodealTX, specializing in antiques, vintage items, and collectibles and more.
+A responsive vintage storefront and read-only shopping hub for the WhataGoodealTX eBay and Whatnot shops.
 
-## Project Structure
+## Stack
 
-This is a Turborepo monorepo containing:
+- Turborepo monorepo
+- Next.js 15 App Router with React and TypeScript
+- Build-generated SQLite catalog via `better-sqlite3`
+- Standards-compliant CSV parsing via `csv-parse`
+- Railway deployment target
 
-- `apps/web` - Next.js 14 website with App Router
-
-## Getting Started
-
-### Install Dependencies
-
-```bash
-npm install
-```
-
-### Development
+Use the exact pnpm version pinned in `package.json`.
 
 ```bash
-npm run dev
+pnpm install
+pnpm dev
+pnpm lint
+pnpm build
 ```
 
-This will start all apps in development mode.
+## Catalog
 
-### Build
+The storefront catalog is generated from `apps/web/data/ebay-listings.csv` and the tracked, sanitized `apps/web/data/catalog-media.json` snapshot. Runtime pages open only the ignored, generated `apps/web/data/catalog.sqlite` database in read-only mode.
 
 ```bash
-npm run build
+# Read-only eBay/ListBlaze sync; updates only the sanitized public snapshot.
+pnpm catalog:sync
+
+# Validate the CSV and atomically regenerate the local SQLite database.
+pnpm catalog:build
+
+# Run importer, provider-fixture, and catalog-query tests.
+pnpm test:catalog
 ```
 
-### Production
+`catalog:sync` defaults to the ListBlaze database under macOS Application Support and `/Users/jason/projects/ebay-inserter/.env.local`. Use `--database` or `--env-file` to override those paths. Credentials are loaded only in memory; sync must never print them, modify ListBlaze, or mutate an eBay listing.
 
-```bash
-npm run start
-```
+`pnpm build` runs `catalog:build` automatically. The generated database is ignored by Git and declared as a Turborepo build output.
 
-## Apps
+## Content boundaries
 
-### Web (`apps/web`)
-
-The main WhataGoodealTX website featuring:
-
-- Vintage postcard-themed design
-- Product categories showcase
-- Contact form modal
-- Responsive layout
-- 1950s aesthetic with retro fonts and colors
-- Resend email integration
-
-## Deployment
-
-This project is configured for deployment on Railway.
-
-## Tech Stack
-
-- **Turborepo** - Monorepo build system
-- **Next.js 14** - React framework with App Router
-- **TypeScript** - Type safety
-- **Resend** - Email service
-- **CSS** - Custom styling with vintage aesthetic
-
-## Environment Variables
-
-Copy `.env.example` to `.env.local` in the web app:
-
-```bash
-cp apps/web/.env.example apps/web/.env.local
-```
-
-Required variables:
-
-### Email (Resend)
-
-- `RESEND_API_KEY` - Your Resend API key
-- `RESEND_TO_EMAIL` - Email address to receive contact form submissions
-- `RESEND_FROM_EMAIL` - Email address to send from (must be verified domain)
-
-### Instagram Integration
-
-- `INSTAGRAM_ACCESS_TOKEN` - Your Instagram Graph API access token
-- `INSTAGRAM_USER_ID` - Your Instagram user ID
-
-#### Getting Instagram Credentials
-
-1. Go to [Facebook Developers](https://developers.facebook.com/)
-2. Create an app and add Instagram Basic Display product
-3. Set up Instagram Business Account
-4. Generate a long-lived access token
-5. Get your Instagram User ID from the Graph API Explorer
-6. Tag posts with `#featured` to display them on the site
-
-The site will automatically:
-
-- Pull the last 9 Instagram posts tagged with `#featured`
-- Cache results for 15 minutes to avoid rate limits
-- Fall back to default categories if Instagram is not configured
-- Display posts as clickable cards linking to Instagram
+- Purchases and checkout occur on eBay or Whatnot, not this website.
+- Contact remains a direct email link. The dormant Resend route is not active in the storefront.
+- Legacy slideshow and mockup assets are preserved for rollback but are not rendered.
+- Do not deploy to Railway or mutate production configuration without explicit approval.

@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://whatagoodealtx.com/sitemap.xml
+Sitemap: https://www.whatagoodealtx.com/sitemap.xml
