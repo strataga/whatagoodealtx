@@ -182,7 +182,10 @@ export function loadDatabaseFallbacks(databasePath, now = new Date()) {
   try {
     const mediaRows = db.prepare(`
       SELECT inventory.ebay_item_id AS itemId,
-             COALESCE(hosted.max_dimension_image_url, hosted.image_url) AS thumbnailUrl,
+             COALESCE(
+               NULLIF(TRIM(hosted.max_dimension_image_url), ''),
+               NULLIF(TRIM(hosted.image_url), '')
+             ) AS thumbnailUrl,
              hosted.expiration_date AS expiresAt
       FROM inventory_items AS inventory
       JOIN image_assets AS asset ON asset.listing_id = inventory.listing_id

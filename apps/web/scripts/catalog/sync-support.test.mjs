@@ -3,8 +3,9 @@ import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import os from 'node:os'
 import path from 'node:path'
 import test from 'node:test'
+import Database from 'better-sqlite3'
 import { isUnexpired, validateThumbnailUrl } from './catalog-core.mjs'
-import { atomicWriteJson, fetchAccessToken, parseOptionalLiveThumbnail, parseSellingPage, parseStoreCategories, redactError } from './sync-support.mjs'
+import { atomicWriteJson, fetchAccessToken, loadDatabaseFallbacks, parseOptionalLiveThumbnail, parseSellingPage, parseStoreCategories, redactError } from './sync-support.mjs'
 
 test('parses Trading pagination, gallery URLs, and Storefront categories', () => {
   const page = parseSellingPage(`
@@ -62,6 +63,29 @@ test('stored image fallbacks require a valid future expiration', () => {
   assert.equal(isUnexpired('2026-08-02T12:00:00Z', now), false)
   assert.equal(isUnexpired('', now), false)
   assert.equal(isUnexpired('not-a-date', now), false)
+})
+
+test('stored fallback uses the standard image when the preferred URL is blank', async () => {
+  const directory = await mkdtemp(path.join(os.tmpdir(), 'wgdtx-fallback-'))
+  const databasePath = path.join(directory, 'catalog.sqlite')
+  const db = new Database(databasePath)
+  db.exec(`
+    CREATE TABLE inventory_items (listing_id INTEGER, ebay_item_id TEXT, listing_draft_id INTEGER, updated_at TEXT);
+    CREATE TABLE image_assets (id INTEGER, listing_id INTEGER);
+    CREATE TABLE hosted_images (image_asset_id INTEGER, max_dimension_image_url TEXT, image_url TEXT, expiration_date TEXT, status TEXT, updated_at TEXT);
+    CREATE TABLE listing_drafts (id INTEGER, store_category_id TEXT);
+    INSERT INTO inventory_items VALUES (1, '327123456789', 1, '2026-08-03T00:00:00Z');
+    INSERT INTO image_assets VALUES (1, 1);
+    INSERT INTO hosted_images VALUES (1, '   ', 'https://i.ebayimg.com/images/g/fallback/s-l500.jpg', '2026-08-05T00:00:00Z', 'hosted', '2026-08-03T00:00:00Z');
+    INSERT INTO listing_drafts VALUES (1, '1');
+  `)
+  db.close()
+  try {
+    const fallbacks = loadDatabaseFallbacks(databasePath, new Date('2026-08-03T12:00:00Z'))
+    assert.equal(fallbacks.get('327123456789').thumbnailUrl, 'https://i.ebayimg.com/images/g/fallback/s-l500.jpg')
+  } finally {
+    await rm(directory, { recursive: true })
+  }
 })
 
 test('atomic snapshot failure preserves the previous file', async () => {
