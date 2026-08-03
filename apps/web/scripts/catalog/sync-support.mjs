@@ -44,12 +44,22 @@ function responseRoot(xml, name) {
   return root
 }
 
+export function parseOptionalLiveThumbnail(value) {
+  const url = text(value)
+  if (!url) return ''
+  try {
+    return validateThumbnailUrl(url)
+  } catch {
+    return ''
+  }
+}
+
 export function parseSellingPage(xml) {
   const root = responseRoot(xml, 'GetMyeBaySelling')
   const active = root.ActiveList ?? {}
   const items = array(active.ItemArray?.Item).map((item) => ({
     itemId: validateItemId(text(item.ItemID)),
-    thumbnailUrl: validateThumbnailUrl(text(item.PictureDetails?.GalleryURL)),
+    thumbnailUrl: parseOptionalLiveThumbnail(item.PictureDetails?.GalleryURL),
     storeCategoryId: text(item.Storefront?.StoreCategoryID),
   }))
   const totalPages = Math.max(1, Number(text(active.PaginationResult?.TotalNumberOfPages)) || 1)

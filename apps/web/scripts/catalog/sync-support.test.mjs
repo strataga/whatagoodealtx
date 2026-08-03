@@ -4,7 +4,7 @@ import os from 'node:os'
 import path from 'node:path'
 import test from 'node:test'
 import { isUnexpired, validateThumbnailUrl } from './catalog-core.mjs'
-import { atomicWriteJson, fetchAccessToken, parseSellingPage, parseStoreCategories, redactError } from './sync-support.mjs'
+import { atomicWriteJson, fetchAccessToken, parseOptionalLiveThumbnail, parseSellingPage, parseStoreCategories, redactError } from './sync-support.mjs'
 
 test('parses Trading pagination, gallery URLs, and Storefront categories', () => {
   const page = parseSellingPage(`
@@ -43,6 +43,17 @@ test('thumbnail allowlist rejects lookalike hosts and non-HTTPS URLs', () => {
   assert.equal(validateThumbnailUrl('https://i.ebayimg.com/images/g/a/s-l500.jpg'), 'https://i.ebayimg.com/images/g/a/s-l500.jpg')
   assert.throws(() => validateThumbnailUrl('http://i.ebayimg.com/a.jpg'), /HTTPS/)
   assert.throws(() => validateThumbnailUrl('https://i.ebayimg.com.example.com/a.jpg'), /exactly i.ebayimg.com/)
+})
+
+test('missing or malformed live thumbnails remain eligible for stored fallback', () => {
+  assert.equal(parseOptionalLiveThumbnail(''), '')
+  assert.equal(parseOptionalLiveThumbnail('https://i.ebayimg.com.example.com/a.jpg'), '')
+  const page = parseSellingPage(`
+    <GetMyeBaySellingResponse><Ack>Success</Ack><ActiveList><ItemArray><Item>
+      <ItemID>327123456789</ItemID><Storefront><StoreCategoryID>1</StoreCategoryID></Storefront>
+    </Item></ItemArray></ActiveList></GetMyeBaySellingResponse>
+  `)
+  assert.equal(page.items[0].thumbnailUrl, '')
 })
 
 test('stored image fallbacks require a valid future expiration', () => {
