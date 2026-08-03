@@ -5,7 +5,7 @@ import path from 'node:path'
 import test from 'node:test'
 import Database from 'better-sqlite3'
 import { isUnexpired, validateThumbnailUrl } from './catalog-core.mjs'
-import { atomicWriteJson, fetchAccessToken, loadDatabaseFallbacks, parseOptionalLiveThumbnail, parseSellingPage, parseStoreCategories, redactError, selectFirstValidThumbnail } from './sync-support.mjs'
+import { atomicWriteJson, fetchAccessToken, loadDatabaseFallbacks, parseOptionalLiveThumbnail, parseSellingPage, parseStoreCategories, redactError, resolveCategoryName, selectFirstValidThumbnail } from './sync-support.mjs'
 
 test('parses Trading pagination, gallery URLs, and Storefront categories', () => {
   const page = parseSellingPage(`
@@ -62,6 +62,19 @@ test('Trading pagination rejects unsafe provider-controlled page counts', () => 
     `),
     /invalid page count/,
   )
+})
+
+test('Storefront category resolution is bounded and rejects cycles', () => {
+  const hierarchy = [
+    { categoryId: '1', parentCategoryId: '', name: 'Toys & Games' },
+    { categoryId: '2', parentCategoryId: '1', name: 'Board Games' },
+  ]
+  assert.equal(resolveCategoryName('2', hierarchy), 'Toys & Games')
+  assert.equal(resolveCategoryName('missing', hierarchy), 'Other')
+  assert.equal(resolveCategoryName('1', [
+    { categoryId: '1', parentCategoryId: '2', name: 'Cycle A' },
+    { categoryId: '2', parentCategoryId: '1', name: 'Cycle B' },
+  ]), 'Other')
 })
 
 test('thumbnail allowlist rejects lookalike hosts and non-HTTPS URLs', () => {

@@ -287,8 +287,13 @@ export async function atomicWriteJson(destination, value, hooks = {}) {
 
 export function resolveCategoryName(categoryId, categories) {
   const byId = new Map(categories.map((category) => [category.categoryId, category]))
+  const visited = new Set()
   let current = byId.get(categoryId)
-  while (current?.parentCategoryId && byId.has(current.parentCategoryId)) current = byId.get(current.parentCategoryId)
+  for (let depth = 0; current?.parentCategoryId && byId.has(current.parentCategoryId); depth += 1) {
+    if (depth >= categories.length || visited.has(current.categoryId)) return 'Other'
+    visited.add(current.categoryId)
+    current = byId.get(current.parentCategoryId)
+  }
   return current?.name || 'Other'
 }
 
