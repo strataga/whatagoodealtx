@@ -65,7 +65,7 @@ test('stored image fallbacks require a valid future expiration', () => {
   assert.equal(isUnexpired('not-a-date', now), false)
 })
 
-test('stored fallback uses the standard image when the preferred URL is blank', async () => {
+test('stored fallback uses the standard image when the preferred URL is blank or invalid', async () => {
   const directory = await mkdtemp(path.join(os.tmpdir(), 'wgdtx-fallback-'))
   const databasePath = path.join(directory, 'catalog.sqlite')
   const db = new Database(databasePath)
@@ -78,11 +78,16 @@ test('stored fallback uses the standard image when the preferred URL is blank', 
     INSERT INTO image_assets VALUES (1, 1);
     INSERT INTO hosted_images VALUES (1, '   ', 'https://i.ebayimg.com/images/g/fallback/s-l500.jpg', '2026-08-05T00:00:00Z', 'hosted', '2026-08-03T00:00:00Z');
     INSERT INTO listing_drafts VALUES (1, '1');
+    INSERT INTO inventory_items VALUES (2, '327123456790', 2, '2026-08-03T00:00:00Z');
+    INSERT INTO image_assets VALUES (2, 2);
+    INSERT INTO hosted_images VALUES (2, 'https://i.ebayimg.com.example.com/unsafe.jpg', 'https://i.ebayimg.com/images/g/safe/s-l500.jpg', '2026-08-05T00:00:00Z', 'hosted', '2026-08-03T00:00:00Z');
+    INSERT INTO listing_drafts VALUES (2, '1');
   `)
   db.close()
   try {
     const fallbacks = loadDatabaseFallbacks(databasePath, new Date('2026-08-03T12:00:00Z'))
     assert.equal(fallbacks.get('327123456789').thumbnailUrl, 'https://i.ebayimg.com/images/g/fallback/s-l500.jpg')
+    assert.equal(fallbacks.get('327123456790').thumbnailUrl, 'https://i.ebayimg.com/images/g/safe/s-l500.jpg')
   } finally {
     await rm(directory, { recursive: true })
   }

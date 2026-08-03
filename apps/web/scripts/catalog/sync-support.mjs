@@ -182,10 +182,8 @@ export function loadDatabaseFallbacks(databasePath, now = new Date()) {
   try {
     const mediaRows = db.prepare(`
       SELECT inventory.ebay_item_id AS itemId,
-             COALESCE(
-               NULLIF(TRIM(hosted.max_dimension_image_url), ''),
-               NULLIF(TRIM(hosted.image_url), '')
-             ) AS thumbnailUrl,
+             hosted.max_dimension_image_url AS preferredThumbnailUrl,
+             hosted.image_url AS thumbnailUrl,
              hosted.expiration_date AS expiresAt
       FROM inventory_items AS inventory
       JOIN image_assets AS asset ON asset.listing_id = inventory.listing_id
@@ -200,9 +198,19 @@ export function loadDatabaseFallbacks(databasePath, now = new Date()) {
       if (!isUnexpired(row.expiresAt, now)) continue
       try {
         const itemId = validateItemId(row.itemId)
+        const thumbnailUrl = [row.preferredThumbnailUrl, row.thumbnailUrl]
+          .map((candidate) => {
+            try {
+              return validateThumbnailUrl(candidate)
+            } catch {
+              return ''
+            }
+          })
+          .find(Boolean)
+        if (!thumbnailUrl) continue
         if (!byId.has(itemId)) byId.set(itemId, {})
         const value = byId.get(itemId)
-        if (!value.thumbnailUrl) value.thumbnailUrl = validateThumbnailUrl(row.thumbnailUrl)
+        if (!value.thumbnailUrl) value.thumbnailUrl = thumbnailUrl
       } catch {
         // Ignore legacy provider data that does not satisfy the public allowlist.
       }
