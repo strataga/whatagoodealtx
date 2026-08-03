@@ -1,42 +1,33 @@
-# WhataGoodealTX
+# WhataGoodealTX web app
 
-A vintage-themed website for WhataGoodealTX, specializing in antiques, vintage items, and collectibles and more.
+Next.js 15 App Router storefront for WhataGoodealTX. The homepage introduces the eBay and Whatnot shops; `/shop` queries a build-generated SQLite snapshot and sends customers to eBay for listing details and checkout.
 
-## Getting Started
-
-First, install the dependencies:
+Use the exact pnpm version pinned by the repository root.
 
 ```bash
-npm install
-# or
-yarn install
-# or
 pnpm install
+pnpm --filter @whatagooddeal/web dev
 ```
 
-Then, run the development server:
+## Catalog workflow
+
+Run these commands from the repository root:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+pnpm catalog:sync   # read-only provider/ListBlaze sync
+pnpm catalog:build  # CSV + sanitized snapshot -> local SQLite
+pnpm test:catalog
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The generated `data/catalog.sqlite` file is ignored and opened read-only at runtime. `catalog:sync` may update only `data/catalog-media.json`; it must never modify ListBlaze or a live eBay listing.
 
-## Features
+## Verification
 
-- Vintage postcard-themed design
-- Responsive layout
-- Product categories showcase
-- Social media links
-- 1950s aesthetic with retro fonts and colors
+```bash
+pnpm test:catalog
+pnpm lint
+pnpm build
+git diff --check
+```
 
-## Tech Stack
-
-- Next.js 14 (App Router)
-- React 18
-- TypeScript
-- CSS Modules
+`pnpm build` invokes catalog generation through `prebuild` and must finish with `/shop` reported as a dynamic server-rendered route. Contact is a direct email link; there is no public contact-mail API.

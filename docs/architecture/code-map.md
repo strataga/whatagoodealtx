@@ -4,7 +4,7 @@
 
 ## Refresh
 
-- Source digest: `2e59c61c80921755`
+- Source digest: `c2082e76ca7bf3d1`
 - Command: `python3 ~/.codex/skills/code-cartographer/scripts/code_cartographer.py --repo . --output docs/architecture/code-map.md --max-files 3000 --tool-timeout 30 --fail-on high`
 - Relationship graph: `docs/architecture/code-map.svg`
 - Volatile run metadata: written to the JSON summary when `--json-output` is used.
@@ -42,16 +42,16 @@
 | --- | --- | --- | --- | --- |
 | graphviz | ok | dot -Tsvg docs/architecture/code-map.dot -o docs/architecture/code-map.svg | Rendered the relationship graph SVG from DOT. | docs/architecture/code-map.svg |
 | universal-ctags | ok | ctags --output-format=json --fields=+n -L build/code-cartographer/ctags-files.txt -f - | Indexed 258 symbols; top kinds: property=113, variable=47, function=43, constant=42, heading3=7 | build/code-cartographer/ctags-files.txt |
-| tokei | ok | tokei --output json . --exclude 'docs/architecture/code-map*' | Code lines: 10078; top languages: JSON=5368, YAML=2862, JavaScript=787, TSX=520, CSS=343 |  |
-| scc | ok | scc --format json --not-match '^docs/architecture/code\-map.*$' . | Complexity: 157; top languages: JSON=5368, CSV=976, JavaScript=787, TypeScript=626, CSS=343 |  |
-| cloc | ok | cloc --json --quiet --vcs git --exclude-list-file build/code-cartographer/cloc-exclude.txt | Files: 38; code lines: 11358; top languages: JSON=5368, YAML=2862, CSV=976, JavaScript=786, TypeScript=626 |  |
+| tokei | ok | tokei --output json . --exclude 'docs/architecture/code-map*' | Code lines: 10079; top languages: JSON=5368, YAML=2862, JavaScript=787, TSX=520, CSS=343 |  |
+| scc | ok | scc --format json --not-match '^docs/architecture/code\-map.*$' . | Complexity: 158; top languages: JSON=5368, CSV=976, JavaScript=787, TypeScript=626, CSS=343 |  |
+| cloc | ok | cloc --json --quiet --vcs git --exclude-list-file build/code-cartographer/cloc-exclude.txt | Files: 38; code lines: 11351; top languages: JSON=5368, YAML=2862, CSV=976, JavaScript=786, TypeScript=626 |  |
 | jscpd | ok | jscpd . --silent --reporters json --output build/code-cartographer/jscpd --min-lines 8 --min-tokens 80 --max-size 100kb --exit-code 0 --ignore '**/node_modules/**,**/target/**,**/dist/**,**/build/**,**/coverage/**,**/*.gen.ts,**/openapi.json,**/pnpm-lock.yaml,**/bun.lock,node_modules/**,.next/**,**/.next/**,.turbo/**,**/.turbo/**,dist/**,build/**,coverage/**,test-results/**,**/test-results/**,playwright-report/**,**/playwright-report/**,.env,.env.local,.env.*.local' | Duplicate blocks: 0; duplicated lines: 0; percentage: 0%. | build/code-cartographer/jscpd/jscpd-report.json |
 | cargo-depgraph | skipped | cargo depgraph | No Cargo.toml files found. |  |
 | cargo-deny | skipped | cargo-deny check | No Cargo.toml files found. |  |
 | ast-grep | available | ast-grep scan | Installed; no project config found, so the cartographer did not run it. |  |
 | semgrep | available | semgrep scan --quiet | Installed; no project config found, so the cartographer did not run it. |  |
 | actionlint | skipped | actionlint -oneline -no-color | No .github/workflows directory found. |  |
-| shellcheck | error | shellcheck -x apps/web/public/slides/convert.sh | In apps/web/public/slides/convert.sh line 3: cd /Users/jason/projects/whatagooddeal/apps/web/public/slides ^-- SC2164 (warning): Use 'cd ... \|\| exit' or 'cd ... \|\| return' in case cd fails. Did you mean: cd /Users/jason/projects/whatagoo... |  |
+| shellcheck | ok | shellcheck -x apps/web/public/slides/convert.sh | Checked 1 shell scripts. |  |
 | yamllint | available | yamllint -f parsable . | Installed; no yamllint config found, so the cartographer did not run it. |  |
 | tree-sitter | available | tree-sitter --version | tree-sitter 0.26.11 |  |
 
@@ -69,8 +69,8 @@
 
 | Context | Files |
 | --- | --- |
-| web | 13 |
-| identity | 5 |
+| web | 14 |
+| identity | 4 |
 | general | 3 |
 | run-content | 3 |
 | auth | 2 |
@@ -130,7 +130,7 @@ No architecture advisory errors detected by the current heuristics.
 | apps/web/next.config.js | source | web | JavaScript | 19 |  | next |
 | apps/web/package.json | support | web | JSON | 41 |  |  |
 | apps/web/public/manifest.json | support | web | JSON | 18 |  |  |
-| apps/web/public/slides/convert.sh | source | identity | Shell | 17 |  |  |
+| apps/web/public/slides/convert.sh | source | web | Shell | 18 |  |  |
 | apps/web/scripts/catalog/build.mjs | source | identity | JavaScript | 76 | buildCatalog | better-sqlite3, node:fs, node:path, node:url |
 | apps/web/scripts/catalog/catalog-core.mjs | source | identity | JavaScript | 133 | REQUIRED_HEADERS, collapseCatalogRows, isUnexpired, listingUrlFor, parseCatalogCsv, parseMoneyToCents, validateItemId, validateThumbnailUrl | csv-parse |
 | apps/web/scripts/catalog/catalog-core.test.mjs | source | web | JavaScript | 63 | csv, media | node:assert, node:fs, node:test |
