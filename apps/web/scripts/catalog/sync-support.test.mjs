@@ -5,7 +5,7 @@ import path from 'node:path'
 import test from 'node:test'
 import Database from 'better-sqlite3'
 import { isUnexpired, validateThumbnailUrl } from './catalog-core.mjs'
-import { atomicWriteJson, fetchAccessToken, loadDatabaseFallbacks, parseOptionalLiveThumbnail, parseSellingPage, parseStoreCategories, redactError } from './sync-support.mjs'
+import { atomicWriteJson, fetchAccessToken, loadDatabaseFallbacks, parseOptionalLiveThumbnail, parseSellingPage, parseStoreCategories, redactError, selectFirstValidThumbnail } from './sync-support.mjs'
 
 test('parses Trading pagination, gallery URLs, and Storefront categories', () => {
   const page = parseSellingPage(`
@@ -55,6 +55,17 @@ test('missing or malformed live thumbnails remain eligible for stored fallback',
     </Item></ItemArray></ActiveList></GetMyeBaySellingResponse>
   `)
   assert.equal(page.items[0].thumbnailUrl, '')
+})
+
+test('thumbnail candidate policy selects the first independently valid URL', () => {
+  assert.equal(
+    selectFirstValidThumbnail(
+      'https://i.ebayimg.com.example.com/unsafe.jpg',
+      'https://i.ebayimg.com/images/g/safe/s-l500.jpg',
+    ),
+    'https://i.ebayimg.com/images/g/safe/s-l500.jpg',
+  )
+  assert.equal(selectFirstValidThumbnail('', 'http://i.ebayimg.com/unsafe.jpg'), '')
 })
 
 test('stored image fallbacks require a valid future expiration', () => {

@@ -54,6 +54,17 @@ export function parseOptionalLiveThumbnail(value) {
   }
 }
 
+export function selectFirstValidThumbnail(...candidates) {
+  for (const candidate of candidates) {
+    try {
+      return validateThumbnailUrl(candidate)
+    } catch {
+      // Try the next provider-owned candidate before declaring the image unavailable.
+    }
+  }
+  return ''
+}
+
 export function parseSellingPage(xml) {
   const root = responseRoot(xml, 'GetMyeBaySelling')
   const active = root.ActiveList ?? {}
@@ -182,8 +193,8 @@ export function loadDatabaseFallbacks(databasePath, now = new Date()) {
   try {
     const mediaRows = db.prepare(`
       SELECT inventory.ebay_item_id AS itemId,
-             hosted.max_dimension_image_url AS preferredThumbnailUrl,
-             hosted.image_url AS thumbnailUrl,
+             hosted.max_dimension_image_url AS maximumThumbnailCandidate,
+             hosted.image_url AS standardThumbnailCandidate,
              hosted.expiration_date AS expiresAt
       FROM inventory_items AS inventory
       JOIN image_assets AS asset ON asset.listing_id = inventory.listing_id
@@ -198,15 +209,10 @@ export function loadDatabaseFallbacks(databasePath, now = new Date()) {
       if (!isUnexpired(row.expiresAt, now)) continue
       try {
         const itemId = validateItemId(row.itemId)
-        const thumbnailUrl = [row.preferredThumbnailUrl, row.thumbnailUrl]
-          .map((candidate) => {
-            try {
-              return validateThumbnailUrl(candidate)
-            } catch {
-              return ''
-            }
-          })
-          .find(Boolean)
+        const thumbnailUrl = selectFirstValidThumbnail(
+          row.maximumThumbnailCandidate,
+          row.standardThumbnailCandidate,
+        )
         if (!thumbnailUrl) continue
         if (!byId.has(itemId)) byId.set(itemId, {})
         const value = byId.get(itemId)
