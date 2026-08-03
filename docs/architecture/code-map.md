@@ -4,7 +4,7 @@
 
 ## Refresh
 
-- Source digest: `dfb4bdf36a81cdff`
+- Source digest: `4df02d62ffeffac4`
 - Command: `python3 ~/.codex/skills/code-cartographer/scripts/code_cartographer.py --repo . --output docs/architecture/code-map.md --max-files 3000 --tool-timeout 30 --fail-on high`
 - Relationship graph: `docs/architecture/code-map.svg`
 - Volatile run metadata: written to the JSON summary when `--json-output` is used.
@@ -28,7 +28,7 @@
 | Language | Files |
 | --- | --- |
 | JavaScript | 10 |
-| TypeScript React | 9 |
+| TypeScript React | 10 |
 | JSON | 6 |
 | TypeScript | 4 |
 | YAML | 2 |
@@ -42,8 +42,8 @@
 | --- | --- | --- | --- | --- |
 | graphviz | ok | dot -Tsvg docs/architecture/code-map.dot -o docs/architecture/code-map.svg | Rendered the relationship graph SVG from DOT. | docs/architecture/code-map.svg |
 | universal-ctags | ok | ctags --output-format=json --fields=+n -L build/code-cartographer/ctags-files.txt -f - | Indexed 275 symbols; top kinds: property=119, variable=49, constant=47, function=47, heading3=7 | build/code-cartographer/ctags-files.txt |
-| tokei | ok | tokei --output json . --exclude 'docs/architecture/code-map*' | Code lines: 10190; top languages: JSON=5368, YAML=2862, JavaScript=898, TSX=520, CSS=343 |  |
-| scc | ok | scc --format json --not-match '^docs/architecture/code\-map.*$' . | Complexity: 172; top languages: JSON=5368, CSV=976, JavaScript=898, TypeScript=626, CSS=343 |  |
+| tokei | ok | tokei --output json . --exclude 'docs/architecture/code-map*' | Code lines: 10208; top languages: JSON=5368, YAML=2862, JavaScript=898, TSX=538, CSS=343 |  |
+| scc | ok | scc --format json --not-match '^docs/architecture/code\-map.*$' . | Complexity: 173; top languages: JSON=5368, CSV=976, JavaScript=898, TypeScript=644, CSS=343 |  |
 | cloc | ok | cloc --json --quiet --vcs git --exclude-list-file build/code-cartographer/cloc-exclude.txt | Files: 38; code lines: 11462; top languages: JSON=5368, YAML=2862, CSV=976, JavaScript=897, TypeScript=626 |  |
 | jscpd | ok | jscpd . --silent --reporters json --output build/code-cartographer/jscpd --min-lines 8 --min-tokens 80 --max-size 100kb --exit-code 0 --ignore '**/node_modules/**,**/target/**,**/dist/**,**/build/**,**/coverage/**,**/*.gen.ts,**/openapi.json,**/pnpm-lock.yaml,**/bun.lock,node_modules/**,.next/**,**/.next/**,.turbo/**,**/.turbo/**,dist/**,build/**,coverage/**,test-results/**,**/test-results/**,playwright-report/**,**/playwright-report/**,.env,.env.local,.env.*.local' | Duplicate blocks: 0; duplicated lines: 0; percentage: 0%. | build/code-cartographer/jscpd/jscpd-report.json |
 | cargo-depgraph | skipped | cargo depgraph | No Cargo.toml files found. |  |
@@ -62,7 +62,7 @@
 | source | 15 |
 | support | 9 |
 | presentation | 5 |
-| web-page | 4 |
+| web-page | 5 |
 | web-route | 1 |
 
 ## Bounded Context Signals
@@ -70,11 +70,11 @@
 | Context | Files |
 | --- | --- |
 | web | 14 |
+| content | 3 |
 | general | 3 |
 | identity | 3 |
 | run-content | 3 |
 | auth | 2 |
-| content | 2 |
 | search | 2 |
 | support | 2 |
 | abuse-control | 1 |
@@ -108,6 +108,7 @@ No architecture advisory errors detected by the current heuristics.
 | apps/web/scripts/catalog/sync.mjs | apps/web/scripts/catalog/catalog-core.mjs |
 | apps/web/scripts/catalog/sync.mjs | apps/web/scripts/catalog/sync-support.mjs |
 | apps/web/src/app/api/instagram/route.ts | apps/web/src/types/instagram.ts |
+| apps/web/src/app/error.tsx | apps/web/src/components/SiteHeader.tsx |
 | apps/web/src/app/layout.tsx | apps/web/src/app/globals.css |
 | apps/web/src/app/layout.tsx | apps/web/src/components/SiteFooter.tsx |
 | apps/web/src/app/layout.tsx | apps/web/src/components/SiteHeader.tsx |
@@ -139,6 +140,7 @@ No architecture advisory errors detected by the current heuristics.
 | apps/web/scripts/catalog/sync-support.test.mjs | source | auth | JavaScript | 118 |  | better-sqlite3, node:assert, node:fs, node:os, node:path, node:test |
 | apps/web/scripts/catalog/sync.mjs | source | support | JavaScript | 85 | main, parseArgs | node:fs, node:path, node:process |
 | apps/web/src/app/api/instagram/route.ts | web-route | identity | TypeScript | 91 | GET, transformToFeaturedItem | next |
+| apps/web/src/app/error.tsx | web-page | content | TypeScript React | 21 |  |  |
 | apps/web/src/app/globals.css | support | content | CSS | 360 |  |  |
 | apps/web/src/app/layout.tsx | web-page | notifications | TypeScript React | 73 | metadata, viewport | next |
 | apps/web/src/app/page.tsx | web-page | run-content | TypeScript React | 97 | metadata | next |

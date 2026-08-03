@@ -11,6 +11,7 @@ digraph CodeMap {
   "source:search" -> "source:web" [label="1"];
   "source:support" -> "source:auth" [label="1"];
   "source:web" -> "source:support" [label="1"];
+  "web-page:content" -> "presentation:web" [label="1"];
   "web-page:notifications" -> "presentation:identity" [label="1"];
   "web-page:notifications" -> "presentation:web" [label="1"];
   "web-page:notifications" -> "support:content" [label="1"];
