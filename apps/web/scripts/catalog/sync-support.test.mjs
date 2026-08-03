@@ -92,9 +92,25 @@ test('catalog merge requires live confirmation before using stored fallback medi
   assert.equal(item.thumbnailUrl, 'https://i.ebayimg.com/images/g/stale/s-l500.jpg')
 })
 
-test('unavailable optional fallback storage behaves as an empty source', () => {
+test('missing or incompatible optional fallback storage behaves as an empty source', async () => {
+  const warnings = []
   const missingPath = path.join(os.tmpdir(), `wgdtx-missing-${process.pid}-${Date.now()}.sqlite`)
-  assert.deepEqual(loadOptionalDatabaseFallbacks(missingPath), new Map())
+  assert.deepEqual(loadOptionalDatabaseFallbacks(missingPath, new Date(), (message) => warnings.push(message)), new Map())
+  const directory = await mkdtemp(path.join(os.tmpdir(), 'wgdtx-incompatible-'))
+  const incompatiblePath = path.join(directory, 'catalog.sqlite')
+  const db = new Database(incompatiblePath)
+  db.exec('CREATE TABLE legacy_table (id INTEGER)')
+  db.close()
+  try {
+    assert.deepEqual(loadOptionalDatabaseFallbacks(incompatiblePath, new Date(), (message) => warnings.push(message)), new Map())
+  } finally {
+    await rm(directory, { recursive: true })
+  }
+  assert.deepEqual(warnings, [
+    'Catalog fallback database is unavailable; continuing with live eBay media.',
+    'Catalog fallback database is unavailable; continuing with live eBay media.',
+  ])
+  assert.equal(warnings.some((warning) => warning.includes(incompatiblePath)), false)
 })
 
 test('thumbnail allowlist rejects lookalike hosts and non-HTTPS URLs', () => {

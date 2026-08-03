@@ -267,11 +267,16 @@ export function loadDatabaseFallbacks(databasePath, now = new Date()) {
   }
 }
 
-export function loadOptionalDatabaseFallbacks(databasePath, now = new Date()) {
+export function loadOptionalDatabaseFallbacks(databasePath, now = new Date(), warn = console.warn) {
   try {
     return loadDatabaseFallbacks(databasePath, now)
   } catch (error) {
-    if (['SQLITE_CANTOPEN', 'ENOENT', 'EACCES'].includes(error?.code)) return new Map()
+    const storageUnavailable = error instanceof Database.SqliteError
+      || ['SQLITE_CANTOPEN', 'ENOENT', 'EACCES'].includes(error?.code)
+    if (storageUnavailable) {
+      warn('Catalog fallback database is unavailable; continuing with live eBay media.')
+      return new Map()
+    }
     throw error
   }
 }
