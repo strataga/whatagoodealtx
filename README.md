@@ -41,6 +41,6 @@ pnpm test:catalog
 ## Content boundaries
 
 - Purchases and checkout occur on eBay or Whatnot, not this website.
-- Contact remains a direct email link. The dormant Resend route is not active in the storefront.
+- Contact remains a direct email link; the unused public contact API and Resend dependency were removed.
 - Legacy slideshow and mockup assets are preserved for rollback but are not rendered.
 - Do not deploy to Railway or mutate production configuration without explicit approval.
