@@ -15,9 +15,11 @@ export default function SiteFooter() {
     <footer className="site-footer" id="connect">
       <div className="footer-inner">
         <div className="footer-story">
-          <Image src="/logo.png" alt="WhataGoodealTX" width={92} height={92} />
+          <div className="footer-logo">
+            <Image src="/logo.png" alt="WhataGoodealTX" width={92} height={92} />
+          </div>
           <div>
-            <p className="script-accent">Good finds, good homes.</p>
+            <p className="script-accent">Good finds, Good Deals.</p>
             <p>We uncover character-rich pieces and connect them with people who will enjoy their next chapter.</p>
           </div>
         </div>
