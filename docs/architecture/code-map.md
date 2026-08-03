@@ -4,7 +4,7 @@
 
 ## Refresh
 
-- Source digest: `d738f8789e80fd7a`
+- Source digest: `7623aa611c3a85dc`
 - Command: `python3 ~/.codex/skills/code-cartographer/scripts/code_cartographer.py --repo . --output docs/architecture/code-map.md --max-files 3000 --tool-timeout 30 --fail-on high`
 - Relationship graph: `docs/architecture/code-map.svg`
 - Volatile run metadata: written to the JSON summary when `--json-output` is used.
@@ -41,7 +41,7 @@
 | Tool | Status | Command | Signal | Artifact |
 | --- | --- | --- | --- | --- |
 | graphviz | ok | dot -Tsvg docs/architecture/code-map.dot -o docs/architecture/code-map.svg | Rendered the relationship graph SVG from DOT. | docs/architecture/code-map.svg |
-| universal-ctags | ok | ctags --output-format=json --fields=+n -L build/code-cartographer/ctags-files.txt -f - | Indexed 328 symbols; top kinds: property=147, variable=63, constant=54, function=51, heading3=7 | build/code-cartographer/ctags-files.txt |
+| universal-ctags | ok | ctags --output-format=json --fields=+n -L build/code-cartographer/ctags-files.txt -f - | Indexed 330 symbols; top kinds: property=148, variable=64, constant=54, function=51, heading3=7 | build/code-cartographer/ctags-files.txt |
 | tokei | ok | tokei --output json . --exclude 'docs/architecture/code-map*' | Code lines: 10317; top languages: JSON=5368, YAML=2862, JavaScript=1007, TSX=538, CSS=343 |  |
 | scc | ok | scc --format json --not-match '^docs/architecture/code\-map.*$' . | Complexity: 182; top languages: JSON=5368, JavaScript=1007, CSV=976, TypeScript=644, CSS=343 |  |
 | cloc | ok | cloc --json --quiet --vcs git --exclude-list-file build/code-cartographer/cloc-exclude.txt | Files: 39; code lines: 11589; top languages: JSON=5368, YAML=2862, JavaScript=1006, CSV=976, TypeScript=644 |  |
