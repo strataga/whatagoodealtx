@@ -4,7 +4,7 @@
 
 ## Refresh
 
-- Source digest: `312b1106c68c303e`
+- Source digest: `d914e9ab374a90ff`
 - Command: `python3 ~/.codex/skills/code-cartographer/scripts/code_cartographer.py --repo . --output docs/architecture/code-map.md --max-files 3000 --tool-timeout 30 --fail-on high`
 - Relationship graph: `docs/architecture/code-map.svg`
 - Volatile run metadata: written to the JSON summary when `--json-output` is used.
@@ -42,9 +42,9 @@
 | --- | --- | --- | --- | --- |
 | graphviz | ok | dot -Tsvg docs/architecture/code-map.dot -o docs/architecture/code-map.svg | Rendered the relationship graph SVG from DOT. | docs/architecture/code-map.svg |
 | universal-ctags | ok | ctags --output-format=json --fields=+n -L build/code-cartographer/ctags-files.txt -f - | Indexed 265 symbols; top kinds: property=113, constant=48, variable=47, function=44, heading3=7 | build/code-cartographer/ctags-files.txt |
-| tokei | ok | tokei --output json . --exclude 'docs/architecture/code-map*' | Code lines: 10353; top languages: JSON=5357, YAML=2876, JavaScript=787, TSX=657, CSS=343 |  |
-| scc | ok | scc --format json --not-match '^docs/architecture/code\-map.*$' . | Complexity: 176; top languages: JSON=5357, CSV=976, TypeScript=898, JavaScript=787, CSS=343 |  |
-| cloc | ok | cloc --json --quiet --vcs git --exclude-list-file build/code-cartographer/cloc-exclude.txt | Files: 24; code lines: 4418; top languages: YAML=2876, TypeScript=648, CSS=343, HTML=284, JSON=123 |  |
+| tokei | ok | tokei --output json . --exclude 'docs/architecture/code-map*' | Code lines: 10386; top languages: JSON=5369, YAML=2897, JavaScript=787, TSX=657, CSS=343 |  |
+| scc | ok | scc --format json --not-match '^docs/architecture/code\-map.*$' . | Complexity: 176; top languages: JSON=5369, CSV=976, TypeScript=898, JavaScript=787, CSS=343 |  |
+| cloc | ok | cloc --json --quiet --vcs git --exclude-list-file build/code-cartographer/cloc-exclude.txt | Files: 40; code lines: 11662; top languages: JSON=5369, YAML=2897, CSV=976, TypeScript=894, JavaScript=786 |  |
 | jscpd | ok | jscpd . --silent --reporters json --output build/code-cartographer/jscpd --min-lines 8 --min-tokens 80 --max-size 100kb --exit-code 0 --ignore '**/node_modules/**,**/target/**,**/dist/**,**/build/**,**/coverage/**,**/*.gen.ts,**/openapi.json,**/pnpm-lock.yaml,**/bun.lock,node_modules/**,.next/**,**/.next/**,.turbo/**,**/.turbo/**,dist/**,build/**,coverage/**,test-results/**,**/test-results/**,playwright-report/**,**/playwright-report/**,.env,.env.local,.env.*.local' | Duplicate blocks: 0; duplicated lines: 0; percentage: 0%. | build/code-cartographer/jscpd/jscpd-report.json |
 | cargo-depgraph | skipped | cargo depgraph | No Cargo.toml files found. |  |
 | cargo-deny | skipped | cargo-deny check | No Cargo.toml files found. |  |
@@ -129,7 +129,7 @@ No architecture advisory errors detected by the current heuristics.
 | apps/web/eslint.config.mjs | source | web | JavaScript | 20 |  | @eslint/eslintrc, node:path, node:url |
 | apps/web/next-env.d.ts | source | web | TypeScript | 7 |  |  |
 | apps/web/next.config.js | source | web | JavaScript | 19 |  | next |
-| apps/web/package.json | support | web | JSON | 35 |  |  |
+| apps/web/package.json | support | web | JSON | 42 |  |  |
 | apps/web/public/manifest.json | support | web | JSON | 18 |  |  |
 | apps/web/public/slides/convert.sh | source | identity | Shell | 17 |  |  |
 | apps/web/scripts/catalog/build.mjs | source | identity | JavaScript | 76 | buildCatalog | better-sqlite3, node:fs, node:path, node:url |
@@ -157,7 +157,7 @@ No architecture advisory errors detected by the current heuristics.
 | apps/web/src/types/instagram.ts | source | web | TypeScript | 29 | FeaturedItem, InstagramPost, InstagramResponse |  |
 | apps/web/tsconfig.json | support | web | JSON | 28 |  |  |
 | mockup/mockup-6-postcard.html | source | run-content | HTML | 316 |  |  |
-| package.json | support | general | JSON | 25 |  |  |
-| pnpm-lock.yaml | support | settings | YAML | 3631 |  |  |
+| package.json | support | general | JSON | 30 |  |  |
+| pnpm-lock.yaml | support | settings | YAML | 3652 |  |  |
 | pnpm-workspace.yaml | support | general | YAML | 13 |  |  |
 | turbo.json | support | general | JSON | 22 |  |  |
