@@ -36,8 +36,32 @@ test('OAuth refresh retries invalid scope without exposing credentials', async (
   const result = await fetchAccessToken({ EBAY_CLIENT_ID: 'client', EBAY_CLIENT_SECRET: 'secret', EBAY_REFRESH_TOKEN: 'refresh' }, fakeFetch)
   assert.equal(result.accessToken, 'temporary-access')
   assert.equal(requests.length, 2)
+  assert.equal(requests.every((request) => request.signal instanceof AbortSignal), true)
   assert.equal(String(requests[1].body).includes('scope='), false)
   assert.equal(redactError(new Error('failed secret refresh temporary-access'), ['secret', 'refresh', 'temporary-access']), 'failed [REDACTED] [REDACTED] [REDACTED]')
+})
+
+test('provider timeouts surface a retryable error', async () => {
+  const timedOutFetch = async () => {
+    const error = new Error('provider stalled')
+    error.name = 'TimeoutError'
+    throw error
+  }
+  await assert.rejects(
+    fetchAccessToken({ EBAY_CLIENT_ID: 'client', EBAY_CLIENT_SECRET: 'secret', EBAY_REFRESH_TOKEN: 'refresh' }, timedOutFetch),
+    /timed out; retry catalog sync/,
+  )
+})
+
+test('Trading pagination rejects unsafe provider-controlled page counts', () => {
+  assert.throws(
+    () => parseSellingPage(`
+      <GetMyeBaySellingResponse><Ack>Success</Ack><ActiveList>
+        <PaginationResult><TotalNumberOfPages>1001</TotalNumberOfPages></PaginationResult>
+      </ActiveList></GetMyeBaySellingResponse>
+    `),
+    /invalid page count/,
+  )
 })
 
 test('thumbnail allowlist rejects lookalike hosts and non-HTTPS URLs', () => {

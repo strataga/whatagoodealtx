@@ -4,7 +4,7 @@
 
 ## Refresh
 
-- Source digest: `4df02d62ffeffac4`
+- Source digest: `ecf44b9c0505c1dd`
 - Command: `python3 ~/.codex/skills/code-cartographer/scripts/code_cartographer.py --repo . --output docs/architecture/code-map.md --max-files 3000 --tool-timeout 30 --fail-on high`
 - Relationship graph: `docs/architecture/code-map.svg`
 - Volatile run metadata: written to the JSON summary when `--json-output` is used.
@@ -41,10 +41,10 @@
 | Tool | Status | Command | Signal | Artifact |
 | --- | --- | --- | --- | --- |
 | graphviz | ok | dot -Tsvg docs/architecture/code-map.dot -o docs/architecture/code-map.svg | Rendered the relationship graph SVG from DOT. | docs/architecture/code-map.svg |
-| universal-ctags | ok | ctags --output-format=json --fields=+n -L build/code-cartographer/ctags-files.txt -f - | Indexed 275 symbols; top kinds: property=119, variable=49, constant=47, function=47, heading3=7 | build/code-cartographer/ctags-files.txt |
-| tokei | ok | tokei --output json . --exclude 'docs/architecture/code-map*' | Code lines: 10208; top languages: JSON=5368, YAML=2862, JavaScript=898, TSX=538, CSS=343 |  |
-| scc | ok | scc --format json --not-match '^docs/architecture/code\-map.*$' . | Complexity: 173; top languages: JSON=5368, CSV=976, JavaScript=898, TypeScript=644, CSS=343 |  |
-| cloc | ok | cloc --json --quiet --vcs git --exclude-list-file build/code-cartographer/cloc-exclude.txt | Files: 38; code lines: 11462; top languages: JSON=5368, YAML=2862, CSV=976, JavaScript=897, TypeScript=626 |  |
+| universal-ctags | ok | ctags --output-format=json --fields=+n -L build/code-cartographer/ctags-files.txt -f - | Indexed 285 symbols; top kinds: property=123, variable=51, constant=49, function=49, heading3=7 | build/code-cartographer/ctags-files.txt |
+| tokei | ok | tokei --output json . --exclude 'docs/architecture/code-map*' | Code lines: 10249; top languages: JSON=5368, YAML=2862, JavaScript=939, TSX=538, CSS=343 |  |
+| scc | ok | scc --format json --not-match '^docs/architecture/code\-map.*$' . | Complexity: 177; top languages: JSON=5368, CSV=976, JavaScript=939, TypeScript=644, CSS=343 |  |
+| cloc | ok | cloc --json --quiet --vcs git --exclude-list-file build/code-cartographer/cloc-exclude.txt | Files: 39; code lines: 11521; top languages: JSON=5368, YAML=2862, CSV=976, JavaScript=938, TypeScript=644 |  |
 | jscpd | ok | jscpd . --silent --reporters json --output build/code-cartographer/jscpd --min-lines 8 --min-tokens 80 --max-size 100kb --exit-code 0 --ignore '**/node_modules/**,**/target/**,**/dist/**,**/build/**,**/coverage/**,**/*.gen.ts,**/openapi.json,**/pnpm-lock.yaml,**/bun.lock,node_modules/**,.next/**,**/.next/**,.turbo/**,**/.turbo/**,dist/**,build/**,coverage/**,test-results/**,**/test-results/**,playwright-report/**,**/playwright-report/**,.env,.env.local,.env.*.local' | Duplicate blocks: 0; duplicated lines: 0; percentage: 0%. | build/code-cartographer/jscpd/jscpd-report.json |
 | cargo-depgraph | skipped | cargo depgraph | No Cargo.toml files found. |  |
 | cargo-deny | skipped | cargo-deny check | No Cargo.toml files found. |  |
@@ -136,8 +136,8 @@ No architecture advisory errors detected by the current heuristics.
 | apps/web/scripts/catalog/catalog-core.mjs | source | support | JavaScript | 166 | REQUIRED_HEADERS, collapseCatalogRows, isUnexpired, listingUrlFor, parseCatalogCsv, parseEbayDateToIso, parseMoneyToCents, validateCurrency | csv-parse |
 | apps/web/scripts/catalog/catalog-core.test.mjs | source | web | JavaScript | 72 | csv, media | node:assert, node:fs, node:test |
 | apps/web/scripts/catalog/catalog-query.test.mjs | source | search | JavaScript | 48 |  | better-sqlite3, node:assert, node:fs, node:os, node:path, node:test |
-| apps/web/scripts/catalog/sync-support.mjs | source | auth | JavaScript | 281 | array, atomicWriteJson, defaultExternalPaths, fetchAccessToken, fetchLiveMedia, flattenCategories, loadDatabaseFallbacks, parseOptionalLiveThumbnail | better-sqlite3, fast-xml-parser, node:fs, node:path |
-| apps/web/scripts/catalog/sync-support.test.mjs | source | auth | JavaScript | 118 |  | better-sqlite3, node:assert, node:fs, node:os, node:path, node:test |
+| apps/web/scripts/catalog/sync-support.mjs | source | auth | JavaScript | 301 | array, atomicWriteJson, defaultExternalPaths, fetchAccessToken, fetchLiveMedia, flattenCategories, loadDatabaseFallbacks, parseOptionalLiveThumbnail | better-sqlite3, fast-xml-parser, node:fs, node:path |
+| apps/web/scripts/catalog/sync-support.test.mjs | source | auth | JavaScript | 142 |  | better-sqlite3, node:assert, node:fs, node:os, node:path, node:test |
 | apps/web/scripts/catalog/sync.mjs | source | support | JavaScript | 85 | main, parseArgs | node:fs, node:path, node:process |
 | apps/web/src/app/api/instagram/route.ts | web-route | identity | TypeScript | 91 | GET, transformToFeaturedItem | next |
 | apps/web/src/app/error.tsx | web-page | content | TypeScript React | 21 |  |  |

@@ -6,6 +6,8 @@ import { isUnexpired, validateItemId, validateThumbnailUrl } from './catalog-cor
 
 const COMPATIBILITY_LEVEL = '1193'
 const PAGE_SIZE = 200
+const MAX_SELLING_PAGES = 1_000
+const PROVIDER_TIMEOUT_MS = 30_000
 const OAUTH_SCOPES = [
   'https://api.ebay.com/oauth/api_scope',
   'https://api.ebay.com/oauth/api_scope/sell.inventory',
@@ -44,6 +46,20 @@ function responseRoot(xml, name) {
   return root
 }
 
+async function providerFetch(fetchImpl, url, init, operation) {
+  try {
+    return await fetchImpl(url, {
+      ...init,
+      signal: AbortSignal.timeout(PROVIDER_TIMEOUT_MS),
+    })
+  } catch (error) {
+    if (error?.name === 'AbortError' || error?.name === 'TimeoutError') {
+      throw new Error(`${operation} timed out; retry catalog sync.`)
+    }
+    throw error
+  }
+}
+
 export function parseOptionalLiveThumbnail(value) {
   const url = text(value)
   if (!url) return ''
@@ -73,7 +89,11 @@ export function parseSellingPage(xml) {
     thumbnailUrl: parseOptionalLiveThumbnail(item.PictureDetails?.GalleryURL),
     storeCategoryId: text(item.Storefront?.StoreCategoryID),
   }))
-  const totalPages = Math.max(1, Number(text(active.PaginationResult?.TotalNumberOfPages)) || 1)
+  const pageCount = text(active.PaginationResult?.TotalNumberOfPages)
+  const totalPages = pageCount ? Number(pageCount) : 1
+  if (!Number.isSafeInteger(totalPages) || totalPages < 1 || totalPages > MAX_SELLING_PAGES) {
+    throw new Error(`GetMyeBaySelling returned an invalid page count (maximum ${MAX_SELLING_PAGES}).`)
+  }
   return { items, totalPages }
 }
 
@@ -126,7 +146,7 @@ export async function fetchAccessToken(env, fetchImpl = fetch) {
   const request = async (includeScope) => {
     const body = new URLSearchParams({ grant_type: 'refresh_token', refresh_token: env.EBAY_REFRESH_TOKEN })
     if (includeScope) body.set('scope', OAUTH_SCOPES.join(' '))
-    return fetchImpl(endpoint, {
+    return providerFetch(fetchImpl, endpoint, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -134,7 +154,7 @@ export async function fetchAccessToken(env, fetchImpl = fetch) {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body,
-    })
+    }, 'eBay OAuth refresh')
   }
   let response = await request(true)
   let payload = await response.json().catch(() => ({}))
@@ -157,7 +177,7 @@ function storeRequest() {
 }
 
 async function tradingCall(environment, accessToken, callName, body, fetchImpl) {
-  const response = await fetchImpl(`${providerBase(environment)}/ws/api.dll`, {
+  const response = await providerFetch(fetchImpl, `${providerBase(environment)}/ws/api.dll`, {
     method: 'POST',
     headers: {
       Accept: 'text/xml',
@@ -170,7 +190,7 @@ async function tradingCall(environment, accessToken, callName, body, fetchImpl) 
     body: body.trimStart().startsWith('<?xml')
       ? body
       : `<?xml version="1.0" encoding="utf-8"?>${body}`,
-  })
+  }, callName)
   const xml = await response.text()
   if (!response.ok) throw new Error(`${callName} failed with HTTP ${response.status}.`)
   return xml
