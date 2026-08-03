@@ -277,7 +277,7 @@ export function loadOptionalDatabaseFallbacks(databasePath, now = new Date(), wa
       warn('Catalog fallback database is unavailable; continuing with live eBay media.')
       return new Map()
     }
-    throw error
+    throw new Error('Unexpected catalog fallback failure.', { cause: error })
   }
 }
 
