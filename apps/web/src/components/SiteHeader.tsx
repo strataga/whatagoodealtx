@@ -9,7 +9,9 @@ export default function SiteHeader() {
     <header className="site-header">
       <div className="header-inner">
         <Link className="brand" href="/" aria-label="WhataGoodealTX home">
-          <Image src="/logo.png" alt="" width={72} height={72} priority />
+          <span className="brand-logo" aria-hidden="true">
+            <Image src="/logo.png" alt="" width={72} height={72} priority />
+          </span>
           <span>WhataGoodealTX</span>
         </Link>
         <nav aria-label="Main navigation">

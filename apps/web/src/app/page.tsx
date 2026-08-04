@@ -22,7 +22,7 @@ export default function Home() {
       <section className="hero section-shell" aria-labelledby="hero-title">
         <div className="hero-copy">
           <p className="ribbon-label">Curated in Texas · Shipped with care</p>
-          <h1 id="hero-title">Good finds deserve a second life.</h1>
+          <h1 id="hero-title">Good things deserve a second life.</h1>
           <p className="hero-lede">Vintage treasures, collectibles, music, toys, home finds, and wonderfully unexpected oddities—chosen one good find at a time.</p>
           <div className="hero-actions" aria-label="Choose where to shop">
             <a className="button button--red" href={EBAY_URL} target="_blank" rel="noopener noreferrer">Shop the eBay store <span aria-hidden="true">↗</span></a>
@@ -58,7 +58,7 @@ export default function Home() {
 
       <section className="newest section-shell" aria-labelledby="newest-title">
         <div className="section-heading">
-          <div><p className="eyebrow">Just unpacked</p><h2 id="newest-title">Newly listed finds</h2></div>
+          <div><p className="eyebrow">From our eBay store</p><h2 id="newest-title">Newly listed finds</h2></div>
           <Link className="text-link" href="/shop?sort=newest">See what’s new <span aria-hidden="true">→</span></Link>
         </div>
         <div className="product-grid">

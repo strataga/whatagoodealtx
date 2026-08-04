@@ -51,7 +51,7 @@ export default async function ShopPage({ searchParams }: { searchParams: ShopSea
       <header className="shop-intro">
         <p className="eyebrow">The current eBay shelves</p>
         <h1>Find your kind of good deal.</h1>
-        <p>Search and sort our current catalog here, then head to eBay for complete listing details and checkout.</p>
+        <p>Every listing shown here comes from our WhataGoodealTX eBay store. Search and sort the catalog here, then head to eBay for complete details and checkout.</p>
       </header>
 
       <form className="catalog-filters" action="/shop" method="get" role="search">

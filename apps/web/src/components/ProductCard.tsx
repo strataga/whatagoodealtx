@@ -38,7 +38,8 @@ export default function ProductCard({ item, priority = false }: { item: CatalogI
         />
       </a>
       <div className="product-card__body">
-        <p className="eyebrow">{item.department}</p>
+        <p className="product-card__source">Listed on our eBay store</p>
+        <p className="product-card__department">{item.department}</p>
         <h3><a href={item.listing_url} target="_blank" rel="noopener noreferrer">{item.title}</a></h3>
         <div className="product-card__meta">
           <strong>{formatPrice(item)}</strong>
