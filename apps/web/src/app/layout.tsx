@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   icons: { icon: '/logo.png', shortcut: '/logo.png', apple: '/logo.png' },
   manifest: '/manifest.json',
   openGraph: {
-    title: 'WhataGoodealTX | Good finds deserve a second life',
+    title: 'WhataGoodealTX | Good things deserve a second life',
     description: 'Vintage treasures, collectibles, music, toys, home finds, and oddities—chosen one good find at a time.',
     url: '/',
     siteName: 'WhataGoodealTX',
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'WhataGoodealTX | Good finds deserve a second life',
+    title: 'WhataGoodealTX | Good things deserve a second life',
     description: 'Browse vintage treasures, collectibles, toys, home finds, and oddities.',
     images: ['/logo.png'],
   },

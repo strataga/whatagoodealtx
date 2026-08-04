@@ -11,6 +11,14 @@ export const metadata: Metadata = {
   alternates: { canonical: '/' },
 }
 
+const socialLinks = [
+  { name: 'eBay', href: EBAY_URL, slug: 'ebay' },
+  { name: 'Whatnot', href: WHATNOT_URL, slug: 'whatnot' },
+  { name: 'Instagram', href: 'https://www.instagram.com/whatagoodealtx/', slug: 'instagram' },
+  { name: 'Facebook', href: 'https://www.facebook.com/profile.php?id=61583154290122', slug: 'facebook' },
+  { name: 'TikTok', href: 'https://www.tiktok.com/@whatagoodealtx', slug: 'tiktok' },
+]
+
 export default function Home() {
   const newest = getNewestItems(8) as Array<CatalogItem>
   const departments = listDepartments() as { name: string; itemCount: number }[]
@@ -37,6 +45,24 @@ export default function Home() {
             </a>
           ))}
           <span className="collage-sticker" aria-hidden="true">Fresh finds!</span>
+        </div>
+      </section>
+
+      <section className="social-strip" aria-labelledby="social-title">
+        <div className="social-strip__inner section-shell">
+          <div className="social-strip__copy">
+            <p className="eyebrow">Keep treasure hunting</p>
+            <h2 id="social-title">Find & follow us</h2>
+          </div>
+          <nav className="social-logo-grid" aria-label="WhataGoodealTX shops and social media">
+            {socialLinks.map((social) => (
+              <a key={social.name} className="social-logo-link" href={social.href} target="_blank" rel="noopener noreferrer">
+                <span className={`social-logo social-logo--${social.slug}`} aria-hidden="true" />
+                <span>{social.name}</span>
+                <span className="social-logo-link__arrow" aria-hidden="true">↗</span>
+              </a>
+            ))}
+          </nav>
         </div>
       </section>
 

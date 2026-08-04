@@ -197,6 +197,43 @@ h1, h2, h3 { font-family: var(--font-heading), Georgia, serif; line-height: 1.12
   transform: rotate(-10deg);
 }
 
+.social-strip { padding-block: 30px; background: var(--cream); border-block: 1px solid var(--cream-deep); }
+.social-strip__inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; }
+.social-strip__copy { flex: 0 0 auto; }
+.social-strip__copy h2 { margin: 4px 0 0; font-size: clamp(1.65rem, 3vw, 2.35rem); }
+.social-logo-grid { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 12px; }
+.social-logo-link {
+  position: relative;
+  width: 108px;
+  min-height: 92px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 12px 10px;
+  overflow: hidden;
+  color: var(--navy);
+  background: white;
+  border: 1px solid rgba(8,46,85,.18);
+  border-radius: 6px;
+  font-family: var(--font-label), sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-decoration: none;
+  box-shadow: 3px 3px 0 var(--gold);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.social-logo-link:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--gold); }
+.social-logo { width: 44px; height: 44px; display: block; background-position: center; background-repeat: no-repeat; background-size: contain; }
+.social-logo--ebay { background-image: url('/social/ebay.svg'); }
+.social-logo--whatnot { background-image: url('/social/whatnot.svg'); }
+.social-logo--instagram { background-image: url('/social/instagram.svg'); }
+.social-logo--facebook { background-image: url('/social/facebook.svg'); }
+.social-logo--tiktok { background-image: url('/social/tiktok.svg'); }
+.social-logo-link__arrow { position: absolute; top: 5px; right: 8px; color: var(--red); font-size: .85rem; }
+
 .departments, .newest, .platforms { padding-block: 90px; }
 .departments { border-top: 1px solid var(--line); }
 .section-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 25px; margin-bottom: 36px; }
@@ -324,6 +361,8 @@ h1, h2, h3 { font-family: var(--font-heading), Georgia, serif; line-height: 1.12
   .header-inner nav a { padding-inline: 7px; font-size: .9rem; }
   .hero { grid-template-columns: 1fr; padding-block: 58px 65px; }
   .hero-collage { min-height: 460px; }
+  .social-strip__inner { align-items: flex-start; flex-direction: column; }
+  .social-logo-grid { width: 100%; justify-content: center; }
   .departments, .newest, .platforms { padding-block: 65px; }
   .section-heading { align-items: start; flex-direction: column; }
   .product-grid, .product-grid--catalog { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
@@ -345,6 +384,8 @@ h1, h2, h3 { font-family: var(--font-heading), Georgia, serif; line-height: 1.12
   .hero-actions { align-items: stretch; flex-direction: column; }
   .button { width: 100%; }
   .hero-collage { min-height: 390px; }
+  .social-logo-grid { gap: 10px; }
+  .social-logo-link { width: calc((100% - 20px) / 3); }
   .collage-item { border-width: 6px; }
   .collage-sticker { right: 24%; width: 90px; height: 90px; font-size: 1.15rem; }
   .department-grid { grid-template-columns: 1fr; }
